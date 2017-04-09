@@ -8,8 +8,8 @@ ExtraCorePE is supported to Minecraft:PE & Win10 <br>
 Report any issues and we will try to fix them for you. <br>
 
 ## Builds
-**IN DEV**
-<br>
+__Travis-CI Build:__<br>
+ [![Travis-CI](https://travis-ci.org/ExtraCorePE/ExtraCorePE.svg?branch=master)](https://travis-ci.org/ExtraCorePE/ExtraCorePE)
 
 ## Resources
 Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (If you are on windows).<br>
