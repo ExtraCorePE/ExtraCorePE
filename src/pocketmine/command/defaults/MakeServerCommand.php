@@ -22,7 +22,7 @@ class MakeServerCommand extends VanillaCommand{
 		}
 
 		$server = $sender->getServer();
-		$pharPath = Server::getInstance()->getPluginPath() . DIRECTORY_SEPARATOR . "Tesseract" . DIRECTORY_SEPARATOR . $server->getName() . "_" . $server->getPocketMineVersion() . ".phar";
+		$pharPath = Server::getInstance()->getPluginPath() . "Tesseract" . DIRECTORY_SEPARATOR . $server->getName() . "_" . $server->getPocketMineVersion() . ".phar";
 		if(file_exists($pharPath)){
 			$sender->sendMessage("Phar file already exists, overwriting...");
 			@unlink($pharPath);
