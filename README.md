@@ -12,7 +12,7 @@ Report any issues and we will try to fix them for you. <br>
 <br>
 
 ## Resources
-Your Tesseract Server needs Visual Studio C++ Redistributable 2015 (If you are on windows).<br>
+Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (If you are on windows).<br>
 It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)<br>
 
 
