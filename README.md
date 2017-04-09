@@ -1,6 +1,7 @@
 ## ExtraCorePE Introduction
 ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
+ExtraCorePE supports ResourcePacks and some 1.0.0 elements.
 Contact us on [![Gitter](https://badges.gitter.im/ExtraCorePE/ExtraCorePE.svg)](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) for support
 
 ## Notice
