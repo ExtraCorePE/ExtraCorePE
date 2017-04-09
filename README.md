@@ -1,7 +1,4 @@
-![ExtraCorePE]()
-
 ## ExtraCorePE Introduction
--------------
 **ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
 Contact us on [Gitter](https://gitter.im/ExtraCorePE/home) for support**
