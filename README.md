@@ -1,22 +1,19 @@
 ## ExtraCorePE Introduction
-**ExtraCorePE is the advanced server software! <br>
+ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
-Contact us on [Gitter](https://gitter.im/ExtraCorePE/home) for support**
+Contact us on [Gitter](https://gitter.im/ExtraCorePE/home) for support
 
 ## Notice
-
-**ExtraCorePE is supported to Minecraft:PE & Win10 <br>
-Report any issues and we will try to fix them for you.** <br>
+ExtraCorePE is supported to Minecraft:PE & Win10 <br>
+Report any issues and we will try to fix them for you. <br>
 
 ## Builds
 **IN DEV**
 <br>
 
 ## Resources
-
-**External Links**<br>
 Your Tesseract Server needs Visual Studio C++ Redistributable 2015 (If you are on windows).<br>
-It can be downloaded__[here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)__<br>
+It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)<br>
 
 
 ## Third-party Libraries/Protocols Used
