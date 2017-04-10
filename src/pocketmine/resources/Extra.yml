@@ -26,6 +26,7 @@ settings:
  async-workers: 4
  #Enables use of non-production, development builds. WARNING: DO NOT enable this unless you are sure you know what you are doing.
  enable-testing: false
+ #Folder plugin loader enable setting.
  folder-plugin-loader: true
 
 memory:
@@ -60,10 +61,10 @@ max-chunks:
   trigger-chunk-collect: true
   #Trigger on low memory
   low-memory-trigger: true
- world-caches:
+  
+world-caches:
   disable-chunk-cache: true
   low-memory-trigger: true
-
 
 network:
  #Threshold for batching packets, in bytes. Only these packets will be compressed
