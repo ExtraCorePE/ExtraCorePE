@@ -1,21 +1,20 @@
-## ExtraCorePE Introduction
+## ExtraCorePE
+[![Travis-CI](https://travis-ci.org/ExtraCorePE/ExtraCorePE.svg?branch=master)](https://travis-ci.org/ExtraCorePE/ExtraCorePE)
+[![Gitter](https://badges.gitter.im/ExtraCorePE/ExtraCorePE.svg)](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+## Introduction
 ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
 ExtraCorePE supports ResourcePacks and some 1.0.0 elements.<br>
-Contact us on [![Gitter](https://badges.gitter.im/ExtraCorePE/ExtraCorePE.svg)](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) for support
+Contact us on [gitter](https://badges.gitter.im/ExtraCorePE/ExtraCorePE.svg) for support. <br>
 
 ## Notice
 ExtraCorePE is supported to Minecraft:PE & Win10 <br>
 Report any issues and we will try to fix them for you. <br>
 
-## Builds
-__Travis-CI Build:__<br>
- [![Travis-CI](https://travis-ci.org/ExtraCorePE/ExtraCorePE.svg?branch=master)](https://travis-ci.org/ExtraCorePE/ExtraCorePE)
-
 ## Resources
 Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (If you are on windows).<br>
 It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)<br>
-
 
 ## Third-party Libraries/Protocols Used
 * __[PHP Sockets](http://php.net/manual/en/book.sockets.php)__
