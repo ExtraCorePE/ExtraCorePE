@@ -1448,11 +1448,11 @@ class Server{
 			$this->dataPath = realpath($dataPath) . DIRECTORY_SEPARATOR;
 			$this->pluginPath = realpath($pluginPath) . DIRECTORY_SEPARATOR;
 
-			if(!file_exists($this->dataPath . "Extra.yml")){
-				$content = file_get_contents($this->filePath . "src/pocketmine/resources/Extra.yml");
-				@file_put_contents($this->dataPath . "Extra.yml", $content);
+			if(!file_exists($this->dataPath . "ExtraCorePE.yml")){
+				$content = file_get_contents($this->filePath . "src/pocketmine/resources/ExtraCorePE.yml");
+				@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
 			}
-			$this->config = new Config($configPath = $this->dataPath . "Extra.yml", Config::YAML, []);
+			$this->config = new Config($configPath = $this->dataPath . "ExtraCorePE.yml", Config::YAML, []);
 			$this->console = new CommandReader($logger);
 			$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
 				"motd" => "Minecraft: PE Server",
@@ -1519,6 +1519,12 @@ class Server{
 			}
 
 			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
+			if(file_exists($this->filePath . "src/pocketmine/resources/ExtraCorePE_$lang.yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_$lang.yml");
+			}else{
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_eng.yml");
+			}
+
 
 			$this->forceLanguage = $this->getProperty("settings.force-language", false);
 			$this->baseLang = new BaseLang($this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE));
@@ -1642,7 +1648,7 @@ class Server{
 			if($this->getProperty("network.raklib-disable", false)){
 				$this->network->registerInterface(new RakLibInterface($this));
 			}else{
-				$this->logger->notice("Raklib disabled by Extra.yml!");
+				$this->logger->notice("Raklib disabled by ExtraCorePE.yml!");
 			}
 
 			LevelProviderManager::addProvider(Anvil::class);

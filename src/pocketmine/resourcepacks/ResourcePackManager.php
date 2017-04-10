@@ -61,7 +61,7 @@ class ResourcePackManager{
 			throw new \InvalidArgumentException("Resource packs path $path exists and is not a directory");
 		}
 
-		$this->resourcePacksConfig = new Config("Extra.yml", Config::YAML, []);
+		$this->resourcePacksConfig = new Config("ExtraCorePE.yml", Config::YAML, []);
 		$this->serverForceResources = (bool) $this->resourcePacksConfig->get("resource_packs.force_resources", false);
 		$this->server->getLogger()->info("Loading resource packs...");
 
