@@ -1447,11 +1447,6 @@ class Server{
 
 			$this->dataPath = realpath($dataPath) . DIRECTORY_SEPARATOR;
 			$this->pluginPath = realpath($pluginPath) . DIRECTORY_SEPARATOR;
-
-			if(!file_exists($this->dataPath . "ExtraCorePE.yml")){
-				$content = file_get_contents($this->filePath . "src/pocketmine/resources/ExtraCorePE.yml");
-				@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
-			}
 			$this->config = new Config($configPath = $this->dataPath . "ExtraCorePE.yml", Config::YAML, []);
 			$this->console = new CommandReader($logger);
 			$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
@@ -1497,18 +1492,18 @@ class Server{
 			$package = $packages;
 
 			            $this->logger->info("
-§6┌─────────────────────────────────────────────────────────────────────────────────────────────────┐  §6-- Loaded: Properties and Configuration --
-§6│                                                                                                 │    §cDate: §d$date
+§6┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐  §6-- Loaded: Properties and Configuration --
+§6│                                                                                                         │    §cDate: §d$date
 §6│  §6███████╗██╗  ██╗████████╗██████╗  █████╗   §c ██████╗ ██████╗ ██████╗ ███████╗  §2██████╗ ███████╗ §6│    §cVersion: §d$version §cCodename: §d$code
 §6│  §6██╔════╝╚██╗██╔╝╚══██╔══╝██╔══██╗██╔══██╗  §c██╔════╝██╔═══██╗██╔══██╗██╔════╝  §2██╔══██╗██╔════╝ §6│    §cMCPE: §d$mcpe §cProtocol: §d$protocol
 §6│  §6█████╗   ╚███╔╝    ██║   ██████╔╝███████║  §c██║     ██║   ██║██████╔╝█████╗    §2██████╔╝█████╗   §6│    §cIP: §d$ip §cPort: §d$port
 §6│  §6██╔══╝   ██╔██╗    ██║   ██╔══██╗██╔══██║  §c██║     ██║   ██║██╔══██╗██╔══╝    §2██╔═══╝ ██╔══╝   §6│    §cQuery: §d$query
 §6│  §6███████╗██╔╝ ██╗   ██║   ██║  ██║██║  ██║  §c╚██████╗╚██████╔╝██║  ██║███████╗  §2██║     ███████╗ §6│    §cSSL Extension: §d$ssl
 §6│  §6╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝  §c ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝  §2╚═╝     ╚══════╝ §6│    §cAuthentication: §d$mode
-§6│                                                                                                 │    §cAPI Version: §d$api
-§6│     §e>>>>>    >>>>>    §2Support: §3https://github.com/ExtraCorePE/ExtraCorePE    §e<<<<<    <<<<<     §6│    §cLanguage: §d$lang
-§6│					                                                          │    §cPackage: §d$package
-§6└─────────────────────────────────────────────────────────────────────────────────────────────────┘  §6------------------------------------------");
+§6│                                                                                                         │    §cAPI Version: §d$api
+§6│     §e>>>>>    >>>>>    §2Support: §3https://github.com/ExtraCorePE/ExtraCorePE    §e<<<<<    <<<<<   §6│    §cLanguage: §d$lang
+§6│					                                                                                        │    §cPackage: §d$package
+§6└─────────────────────────────────────────────────────────────────────────────────────────────────────────┘  §6------------------------------------------");
 
 			$nowLang = $this->getProperty("settings.language", "eng");
 
@@ -1519,12 +1514,15 @@ class Server{
 			}
 
 			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
-			if(file_exists($this->filePath . "src/pocketmine/resources/ExtraCorePE_$lang.yml")){
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_$lang.yml");
+			if(file_exists($this->filePath . "src/pocketmine/resources/ExtraCorePE_".$lang.".yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_".$lang.".yml");
 			}else{
 				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_eng.yml");
 			}
-
+			
+			if(!file_exists($this->dataPath . "ExtraCorePE.yml")){
+				@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
+			}
 
 			$this->forceLanguage = $this->getProperty("settings.force-language", false);
 			$this->baseLang = new BaseLang($this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE));
@@ -1567,9 +1565,6 @@ class Server{
 
 			$this->operators = new Config($this->dataPath . "ops.json", Config::JSON);
 			$this->whitelist = new Config($this->dataPath . "whitelist.json", Config::JSON);
-			if(file_exists($this->dataPath . "banned.txt") and !file_exists($this->dataPath . "banned-players.txt")){
-				@rename($this->dataPath . "banned.txt", $this->dataPath . "banned-players.txt");
-			}
 			@touch($this->dataPath . "banned-players.txt");
 			$this->banByName = new BanList($this->dataPath . "banned-players.txt");
 			$this->banByName->load();
