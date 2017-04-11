@@ -1441,13 +1441,25 @@ class Server{
 			
 			if(\Phar::running(true) === ""){
 			   $packages = "src";
-			} else {
+			}else{
 				$packages = "phar";
 			}
 
 			$this->dataPath = realpath($dataPath) . DIRECTORY_SEPARATOR;
 			$this->pluginPath = realpath($pluginPath) . DIRECTORY_SEPARATOR;
-			$this->config = new Config($configPath = $this->dataPath . "pocketmine.yml", Config::YAML, []);
+
+			if(!file_exists($this->dataPath . "ExtraCorePE.yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_eng.yml");
+				@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
+				$this->logger->info(TextFormat::AQUA."Please select a language for language.yml");
+			}
+			if(!file_exists($this->dataPath . "language.yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/language.yml");
+				@file_put_contents($this->dataPath . "language.yml", $content);
+			}
+
+			$this->languageConfig = new Config("language.yml", Config::YAML, []);
+			$this->config = new Config($configPath = $this->dataPath . "ExtraCorePE.yml", Config::YAML, []);
 			$this->console = new CommandReader($logger);
 			$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
 				"motd" => "Minecraft: PE Server",
@@ -1487,11 +1499,11 @@ class Server{
 			$query = $this->getIp();
 			$ssl = $this->isExtensionInstalled("OpenSSL");
 			$mode = $this->checkAuthentication();
-			$lang = $this->getProperty("settings.language", "eng");
+			$lang = $this->languageConfig->get("language", "eng");
 			$date = date("D, F d, Y, H:i T");
 			$package = $packages;
 
-			            $this->logger->info("
+			$this->logger->info("
 §6┌─────────────────────────────────────────────────────────────────────────────────────────────────┐  §6-- Loaded: Properties and Configuration --
 §6│                                                                                                 │    §cDate: §d$date
 §6│  §6███████╗██╗  ██╗████████╗██████╗  █████╗   §c ██████╗ ██████╗ ██████╗ ███████╗  §2██████╗ ███████╗ §6│    §cVersion: §d$version §cCodename: §d$code
@@ -1513,14 +1525,17 @@ class Server{
 				unset($this->propertyCache["settings.language"]);
 			}
 
-			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
-			if(file_exists($this->filePath . "src/pocketmine/resources/ExtraCorePE_".$lang.".yml")){
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_".$lang.".yml");
-			}else{
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_eng.yml");
-			}
-			if(!file_exists($this->dataPath . "ExtraCorePE.yml")){
-				@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
+			//$this->languageConfig = new Config("language.yml", Config::YAML, []);
+			$selectLang = $this->languageConfig->get("language", "eng");
+
+			if($nowLang != $selectLang){
+				if(file_exists($this->filePath . "src/pocketmine/resources/ExtraCorePE_".$selectLang.".yml")){
+					$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_".$selectLang.".yml");
+					@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
+					$this->logger->info(TextFormat::GREEN."Change ExtraCorePE language! ".TextFormat::WHITE."(".$nowLang." -> ".$selectLang.") ");
+				}else{
+					$this->logger->info(TextFormat::RED."This language not supported!");
+				}
 			}
 
 			$this->forceLanguage = $this->getProperty("settings.force-language", false);

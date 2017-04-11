@@ -6,7 +6,7 @@
 settings:
  # Трехбуквенный код языка для локализации на стороне сервера
  # Узнай свой код ядры в https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
- language: "eng"
+ language: "rus"
  # Включение мульти язычности сервера.
  force-language: false
  # Сообщение при выключении сервера
