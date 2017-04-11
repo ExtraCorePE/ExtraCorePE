@@ -1640,9 +1640,9 @@ class Server{
 			$this->enablePlugins(PluginLoadOrder::STARTUP);
 
 			if($this->getProperty("network.raklib-disable", false)){
-				$this->network->registerInterface(new RakLibInterface($this));
-			}else{
 				$this->logger->notice("Raklib disabled by ExtraCorePE.yml!");
+			}else{
+				$this->network->registerInterface(new RakLibInterface($this));
 			}
 
 			LevelProviderManager::addProvider(Anvil::class);
