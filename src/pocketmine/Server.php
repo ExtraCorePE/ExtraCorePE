@@ -1447,7 +1447,7 @@ class Server{
 
 			$this->dataPath = realpath($dataPath) . DIRECTORY_SEPARATOR;
 			$this->pluginPath = realpath($pluginPath) . DIRECTORY_SEPARATOR;
-			$this->config = new Config($configPath = $this->dataPath . "ExtraCorePE.yml", Config::YAML, []);
+			$this->config = new Config($configPath = $this->dataPath . "pocketmine.yml", Config::YAML, []);
 			$this->console = new CommandReader($logger);
 			$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
 				"motd" => "Minecraft: PE Server",
@@ -1519,7 +1519,6 @@ class Server{
 			}else{
 				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/ExtraCorePE_eng.yml");
 			}
-			
 			if(!file_exists($this->dataPath . "ExtraCorePE.yml")){
 				@file_put_contents($this->dataPath . "ExtraCorePE.yml", $content);
 			}
