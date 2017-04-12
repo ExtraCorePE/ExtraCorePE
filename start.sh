@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This is the start.sh file for Genisys
+# This is the start.sh file for ExtraCorePE
 # Please input ./start.sh to start server
 
 # Variable define
@@ -40,10 +40,10 @@ if [ "$PHP_BINARY" == "" ]; then
 	if [ -f ./bin/php7/bin/php ]; then
 		export PHPRC=""
 		PHP_BINARY="./bin/php7/bin/php"
-	elif type php 2>/dev/null; then
+	elif [[ ! -z $(type php) ]]; then
 		PHP_BINARY=$(type -p php)
 	else
-		echo "[ERROR] Couldn't find a working PHP binary, please use the installer."
+		echo "Couldn't find a working PHP 7 binary, please use the installer."
 		exit 1
 	fi
 fi
@@ -58,7 +58,7 @@ if [ "$POCKETMINE_FILE" == "" ]; then
 	elif [ -f ./src/pocketmine/PocketMine.php ]; then
 		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
 	else
-		echo "[ERROR] Couldn't find a valid ExtraCorePE installation."
+		echo "Couldn't find a valid ExtraCorePE installation"
 		exit 1
 	fi
 fi
@@ -68,13 +68,17 @@ LOOPS=0
 set +e
 while [ "$LOOPS" -eq 0 ] || [ "$DO_LOOP" == "yes" ]; do
 	if [ "$DO_LOOP" == "yes" ]; then
-		"$PHP_BINARY" $POCKETMINE_FILE $@
+		"$PHP_BINARY" "$POCKETMINE_FILE" $@
 	else
-		exec "$PHP_BINARY" $POCKETMINE_FILE $@
+		exec "$PHP_BINARY" "$POCKETMINE_FILE" $@
 	fi
-	((LOOPS++))
+	if [ "$DO_LOOP" == "yes" ]; then
+		if [ ${LOOPS} -gt 0 ]; then
+			echo "Restarted $LOOPS times"
+		fi 
+		echo "To escape the loop, press CTRL+C now. Otherwise, wait 5 seconds for the server to restart."
+		echo ""
+		sleep 5
+		((LOOPS++))
+	fi
 done
-
-if [ ${LOOPS} -gt 1 ]; then
-	echo "[INFO] Restarted $LOOPS times"
-fi
