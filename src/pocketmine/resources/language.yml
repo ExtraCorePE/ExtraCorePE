@@ -1,2 +1,8 @@
-#Please select a language
+#You can set the language here
+#If you change the language and start the server, it will be reflected automatically
+#===== Support language =====
+#     eng (English) 
+#     jpn (日本語)
+#     rus (русский язык)
+#============================
 language: eng
