@@ -185,7 +185,7 @@ class Server{
 	private $craftingManager;
 
 	/** @var ResourcePackManager */
-	private $resourceManager;
+	private $resourcePackManager;
 
 	/** @var ConsoleCommandSender */
 	private $consoleSender;
@@ -628,8 +628,8 @@ class Server{
 	/**
 	 * @return ResourcePackManager
 	 */
-	public function getResourceManager() : ResourcePackManager{
-		return $this->resourceManager;
+	public function getResourcePackManager() : ResourcePackManager{
+		return $this->resourcePackManager;
 	}
 
 	/**
@@ -1633,7 +1633,7 @@ class Server{
 			Color::init();
 			$this->craftingManager = new CraftingManager();
 
-			$this->resourceManager = new ResourcePackManager($this, $this->getDataPath() . "packs" . DIRECTORY_SEPARATOR);
+			$this->resourcePackManager = new ResourcePackManager($this, $this->getDataPath() . "packs" . DIRECTORY_SEPARATOR);
 
 			$this->pluginManager = new PluginManager($this, $this->commandMap);
 			$this->pluginManager->subscribeToPermission(Server::BROADCAST_CHANNEL_ADMINISTRATIVE, $this->consoleSender);
