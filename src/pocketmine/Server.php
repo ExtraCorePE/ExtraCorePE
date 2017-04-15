@@ -1579,15 +1579,9 @@ class Server{
 
 			$this->operators = new Config($this->dataPath . "ops.json", Config::JSON);
 			$this->whitelist = new Config($this->dataPath . "whitelist.json", Config::JSON);
-			@touch($this->dataPath . "banned-players.txt");
-			$this->banByName = new BanList($this->dataPath . "banned-players.txt");
-			$this->banByName->load();
-			@touch($this->dataPath . "banned-ips.txt");
-			$this->banByIP = new BanList($this->dataPath . "banned-ips.txt");
-			$this->banByIP->load();
-			@touch($this->dataPath . "banned-cids.txt");
-			$this->banByCID = new BanList($this->dataPath . "banned-cids.txt");
-			$this->banByCID->load();
+			$this->banByName = new BanList($this->dataPath . "banned-players.json", Config::JSON);
+			$this->banByIP = new BanList($this->dataPath . "banned-ips.json", Config::JSON);
+			$this->banByCID = new BanList($this->dataPath . "banned-cids.json", Config::JSON);
 
 			$this->maxPlayers = $this->getConfigInt("max-players", 20);
 			$this->setAutoSave($this->getConfigBoolean("auto-save", true));
