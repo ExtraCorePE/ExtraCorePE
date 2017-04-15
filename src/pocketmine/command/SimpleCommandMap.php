@@ -37,6 +37,7 @@ use pocketmine\command\defaults\GamemodeCommand;
 use pocketmine\command\defaults\GarbageCollectorCommand;
 use pocketmine\command\defaults\GiveCommand;
 use pocketmine\command\defaults\HelpCommand;
+use pocketmine\command\defaults\ItemCommand;
 use pocketmine\command\defaults\KickCommand;
 use pocketmine\command\defaults\KillCommand;
 use pocketmine\command\defaults\ListCommand;
@@ -140,6 +141,7 @@ class SimpleCommandMap implements CommandMap{
 		$this->register("pocketmine", new EnchantCommand("enchant"));
 		$this->register("pocketmine", new ParticleCommand("particle"));
 		$this->register("pocketmine", new GamemodeCommand("gamemode"));
+		$this->register("pocketmine", new ItemCommand("item"));
 		$this->register("pocketmine", new KillCommand("kill"));
 		$this->register("pocketmine", new SpawnpointCommand("spawnpoint"));
 		$this->register("pocketmine", new SetWorldSpawnCommand("setworldspawn"));
@@ -151,11 +153,11 @@ class SimpleCommandMap implements CommandMap{
 		$this->register("pocketmine", new ReloadCommand("reload"), null, true);
 		$this->register("pocketmine", new XpCommand("xp"));
 		$this->register("pocketmine", new SetBlockCommand("setblock"));
-		
+
 		$this->register("pocketmine", new MakePluginCommand("mp"));
 		$this->register("pocketmine", new MakeServerCommand("ms"));
 		$this->register("pocketmine", new ExtractPluginCommand("ep"));
-		
+
 		if($this->server->getProperty("debug.commands", false)){
 			$this->register("pocketmine", new StatusCommand("status"), null, true);
 			$this->register("pocketmine", new GarbageCollectorCommand("gc"), null, true);
