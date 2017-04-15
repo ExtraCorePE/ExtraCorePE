@@ -25,6 +25,7 @@ namespace pocketmine\network\protocol;
 #include <rules/DataPacket.h>
 
 class ResourcePackDataInfoPacket extends DataPacket{
+
 	const NETWORK_ID = Info::RESOURCE_PACK_DATA_INFO_PACKET;
 
 	public $packId;
@@ -52,6 +53,13 @@ class ResourcePackDataInfoPacket extends DataPacket{
 
 	public function handle(NetworkSession $session) : bool{
 		return $session->handleResourcePackDataInfo($this);
+	}
+
+	/**
+	 * @return PacketName|string
+	 */
+	public function getName(){
+		return "ResourcePackDataInfoPacket";
 	}
 
 }

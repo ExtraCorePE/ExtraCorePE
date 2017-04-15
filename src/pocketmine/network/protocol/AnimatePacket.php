@@ -44,7 +44,7 @@ class AnimatePacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "AnimatePacket";
 	}

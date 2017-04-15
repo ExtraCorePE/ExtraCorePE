@@ -41,7 +41,7 @@ class BatchPacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "BatchPacket";
 	}

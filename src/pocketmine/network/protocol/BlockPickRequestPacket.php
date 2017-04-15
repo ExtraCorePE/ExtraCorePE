@@ -44,7 +44,7 @@ class BlockPickRequestPacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "BlockPickRequestPacket";
 	}

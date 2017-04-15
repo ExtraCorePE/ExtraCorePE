@@ -25,6 +25,7 @@ namespace pocketmine\network\protocol;
 #include <rules/DataPacket.h>
 
 class ResourcePackChunkDataPacket extends DataPacket{
+
 	const NETWORK_ID = Info::RESOURCE_PACK_CHUNK_DATA_PACKET;
 
 	public $packId;
@@ -47,4 +48,12 @@ class ResourcePackChunkDataPacket extends DataPacket{
 		$this->putLInt(strlen($this->data));
 		$this->put($this->data);
 	}
+
+	/**
+	 * @return PacketName|string
+	 */
+	public function getName(){
+		return "ResourcePackChunkDataPacket";
+	}
+
 }

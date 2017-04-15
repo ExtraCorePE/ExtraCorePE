@@ -57,7 +57,7 @@ class ExplodePacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "ExplodePacket";
 	}

@@ -47,7 +47,7 @@ class BlockEventPacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "BlockEventPacket";
 	}

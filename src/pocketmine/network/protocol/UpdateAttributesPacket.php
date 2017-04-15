@@ -52,7 +52,7 @@ class UpdateAttributesPacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "UpdateAttributesPacket";
 	}

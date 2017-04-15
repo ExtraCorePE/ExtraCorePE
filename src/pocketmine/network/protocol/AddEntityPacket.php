@@ -77,7 +77,7 @@ class AddEntityPacket extends DataPacket{
 
 	/**
 	 * @return AddEntityPacket|string
-     */
+	 */
 	public function getName(){
 		return "AddEntityPacket";
 	}

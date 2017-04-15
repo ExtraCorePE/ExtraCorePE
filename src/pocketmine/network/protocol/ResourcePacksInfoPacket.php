@@ -30,7 +30,7 @@ class ResourcePacksInfoPacket extends DataPacket{
 
 	const NETWORK_ID = Info::RESOURCE_PACKS_INFO_PACKET;
 
-	public $mustAccept = false; //force client to use selected resource packs
+	public $mustAccept = false;
 	/** @var ResourcePackInfoEntry */
 	public $behaviorPackEntries = [];
 	/** @var ResourcePackInfoEntry */
@@ -50,6 +50,7 @@ class ResourcePacksInfoPacket extends DataPacket{
 			$this->putString($entry->getPackVersion());
 			$this->putLLong($entry->getPackSize());
 		}
+
 		$this->putLShort(count($this->resourcePackEntries));
 		foreach($this->resourcePackEntries as $entry){
 			$this->putString($entry->getPackId());
@@ -59,8 +60,8 @@ class ResourcePacksInfoPacket extends DataPacket{
 	}
 
 	/**
-	 * @return string
-     */
+	 * @return PacketName|string
+	 */
 	public function getName(){
 		return "ResourcePacksInfoPacket";
 	}

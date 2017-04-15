@@ -150,7 +150,7 @@ class LevelSoundEventPacket extends DataPacket{
 
 	/**
 	 * @return PacketName|string
-     */
+	 */
 	public function getName(){
 		return "LevelSoundEventPacket";
 	}
