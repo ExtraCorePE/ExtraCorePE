@@ -63,23 +63,77 @@ class BanList{
 		if(!$this->isEnabled()){
 			return false;
 		}else{
-			return $this->config->exists(strtolower($name));
+			return $this->config->exists($name);
 		}
 	}
 
 	/**
 	 * @param string    $target
 	 * @param string    $reason
-	 * @param \DateTime $expires
+	 * @param \DateTime $until
 	 *
 	 * @return bool
 	 */
-	public function addBan(string $target, string $reason = "", $expires = ""){
+	public function addBan(string $target, string $reason = "Banned by an operator", $until = ""){
 		$this->config->setNested($target."reason", $reason);
-		$this->config->setNested($target."date", $expires);
-		
+		$this->config->setNested($target."until", $until);
 		$this->save();
-		
-		return $true;
+	
+		return true;
+	}
+	
+	/**
+	 * @param string $name
+	 */
+	public function remove($name){
+		$name = $name;
+		if($this->config->exists($name)){
+			$this->config->remove($name);
+			$this->save();
+			
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public function save(){
+		$this->config->save();
+	}
+	
+	public function getReason($name){
+		if($this->config->exists($name)){
+			$reason = $this->config->getNested($name."reason");
+			
+			return $reason;
+		}
+		return false;
+	}
+	
+	public function setReason($name, $reason){
+		if($this->config->exists($name)){
+			$this->config->setNested($name."reason", $reason);
+			
+			return true;
+		}
+		return false;
+	}
+	
+	public function getUntil($name){
+		if($this->config->exists($name)){
+			$until = $this->config->getNested($name."until");
+			
+			return $until;
+		}
+		return false;
+	}
+	
+	public function setUntil($name, $until){
+		if($this->config->exists($name)){
+			$this->config->setNested($name."until", $until);
+			
+			return true;
+		}
+		return false;
 	}
 }
