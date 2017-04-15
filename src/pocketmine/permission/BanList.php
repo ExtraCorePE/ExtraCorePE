@@ -23,6 +23,7 @@ namespace pocketmine\permission;
 
 use pocketmine\Server;
 use pocketmine\utils\MainLogger;
+use pocketmine\utils\Config;
 
 class BanList{
 
