@@ -2,22 +2,24 @@
 
 /*
  *
- *  ____            _        _   __  __ _                  __  __ ____
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
+ *    ______      _              _____               _____  ______ 
+ *   |  ____|    | |            / ____|             |  __ \|  ____|
+ *   | |__  __  _| |_ _ __ __ _| |     ___  _ __ ___| |__) | |__   
+ *   |  __| \ \/ / __| '__/ _` | |    / _ \| '__/ _ \  ___/|  __|  
+ *   | |____ >  <| |_| | | (_| | |___| (_) | | |  __/ |    | |____ 
+ *   |______/_/\_\\__|_|  \__,_|\_____\___/|_|  \___|_|    |______|
+ *
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
+ * @author ExtraCorePE
+ * @link http://www.github.com/ExtraCorePE/ExtraCorePE
+ * 
  *
- *
-*/
+ */
 
 namespace pocketmine\permission;
 
@@ -30,28 +32,11 @@ class BanList{
 	/** @var string */
 	private $config;
 
-	/** @var bool */
-	private $enabled = true;
-
 	/**
 	 * @param string $file
 	*/
 	public function __construct(Config $config){
 		$this->config = $config;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isEnabled(){
-		return $this->enabled === true;
-	}
-
-	/**
-	 * @param bool $flag
-	 */
-	public function setEnabled($flag){
-		$this->enabled = (bool) $flag;
 	}
 
 	/**
@@ -61,11 +46,8 @@ class BanList{
 	 */
 	public function isBanned($name){
 		$name = strtolower($name);
-		if(!$this->isEnabled()){
-			return false;
-		}else{
-			return $this->config->exists($name);
-		}
+
+		return $this->config->exists($name);
 	}
 
 	/**
@@ -79,62 +61,63 @@ class BanList{
 		$this->config->setNested($target."reason", $reason);
 		$this->config->setNested($target."until", $until);
 		$this->save();
-	
+
 		return true;
 	}
-	
+
 	/**
 	 * @param string $name
 	 */
-	public function remove($name){
+	public function removeBan($name){
 		$name = $name;
 		if($this->config->exists($name)){
 			$this->config->remove($name);
 			$this->save();
-			
+
 			return true;
 		}
 		return false;
 	}
-	
-	
+
+
 	public function save(){
 		$this->config->save();
 	}
-	
+
 	public function getReason($name){
 		if($this->config->exists($name)){
 			$reason = $this->config->getNested($name."reason");
-			
+
 			return $reason;
 		}
 		return false;
 	}
-	
+
 	public function setReason($name, $reason){
 		if($this->config->exists($name)){
 			$this->config->setNested($name."reason", $reason);
-			
+
 			return true;
 		}
 		return false;
 	}
-	
+
 	public function getUntil($name){
 		if($this->config->exists($name)){
 			$until = $this->config->getNested($name."until");
-			
+
 			return $until;
 		}
 		return false;
 	}
-	
+
 	public function setUntil($name, $until){
 		if($this->config->exists($name)){
 			$this->config->setNested($name."until", $until);
-			
+
 			return true;
 		}
 		return false;
 	}
+
 }

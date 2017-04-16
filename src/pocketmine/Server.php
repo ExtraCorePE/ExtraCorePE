@@ -126,11 +126,7 @@ class Server{
 
 	/** @var BanList */
 	private $banByName = null;
-
-	/** @var BanList */
 	private $banByIP = null;
-
-	/** @var BanList */
 	private $banByCID = \null;
 
 	/** @var Config */
@@ -1260,9 +1256,6 @@ class Server{
 		return $this->banByName;
 	}
 
-	/**
-	 * @return BanList
-	 */
 	public function getIPBans(){
 		return $this->banByIP;
 	}
@@ -1716,7 +1709,7 @@ class Server{
 
 				return;
 			}
-			
+
 			if($this->getProperty("level-settings.allow-nether", true)){
 				if(!$this->loadLevel($this->getProperty("level-settings.level-name", "nether"))){
 					$this->generateLevel($this->getProperty("level-settings.level-name", "nether"), time(), Generator::getGenerator("nether"));
@@ -1996,7 +1989,6 @@ class Server{
 			return true;
 		}
 
-
 		$sender->sendMessage(new TranslationContainer(TextFormat::GOLD . "%commands.generic.notFound"));
 
 		return false;
@@ -2021,17 +2013,17 @@ class Server{
 			$this->setConfigInt("difficulty", 3);
 		}
 
-		$this->banByIP->load();
-		$this->banByName->load();
-		$this->banByCID->load();
+		/*$this->banByName->load();
+		$this->banIPName->load();
+		$this->banCIDName->load();*/
 		$this->reloadWhitelist();
 		$this->operators->reload();
 
 		$this->memoryManager->doObjectCleanup();
 
-		foreach($this->getIPBans()->getEntries() as $entry){
-			$this->getNetwork()->blockAddress($entry->getName(), -1);
-		}
+		/*foreach($this->getIPBans()->getEntries() as $entry){
+			$this->network->blockAddress($entry->getName(), -1);
+		}*/
 
 		$this->pluginManager->registerInterface(PharPluginLoader::class);
 		$this->pluginManager->registerInterface(FolderPluginLoader::class);
@@ -2056,7 +2048,7 @@ class Server{
 		
 		$this->getPluginManager()->callEvent($ev = new event\server\ServerShutdownEvent());
  		if($ev->isCancelled(true)) return;
-		
+
 		$this->isRunning = false;
 		if($msg != ""){
 			$this->propertyCache["settings.shutdown-message"] = $msg;
@@ -2140,9 +2132,9 @@ class Server{
 			$this->queryHandler = new QueryHandler();
 		}
 
-		foreach($this->getIPBans()->getEntries() as $entry){
+		/*foreach($this->getIPBans()->getEntries() as $entry){
 			$this->network->blockAddress($entry->getName(), -1);
-		}
+		}*/
 
 		if($this->getProperty("settings.send-usage", true)){
 			$this->sendUsageTicker = 6000;
