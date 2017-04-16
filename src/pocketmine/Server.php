@@ -1579,6 +1579,7 @@ class Server{
 
 			$this->operators = new Config($this->dataPath . "ops.json", Config::JSON);
 			$this->whitelist = new Config($this->dataPath . "whitelist.json", Config::JSON);
+			
 			$bnames = new Config($this->dataPath . "banned-players.json", Config::JSON);
 			$bips = new Config($this->dataPath . "banned-ips.json", Config::JSON);
 			$bcids = new Config($this->dataPath . "banned-cids.json", Config::JSON);
@@ -2021,16 +2022,13 @@ class Server{
 			$this->setConfigInt("difficulty", 3);
 		}
 
-		$this->banByIP->load();
-		$this->banByName->load();
-		$this->banByCID->load();
 		$this->reloadWhitelist();
 		$this->operators->reload();
 
 		$this->memoryManager->doObjectCleanup();
 
-		foreach($this->getIPBans()->getEntries() as $entry){
-			$this->getNetwork()->blockAddress($entry->getName(), -1);
+		foreach($this->getIPBans()->getEntries() as $name => $data){
+			$this->getNetwork()->blockAddress($name, -1);
 		}
 
 		$this->pluginManager->registerInterface(PharPluginLoader::class);
@@ -2140,8 +2138,8 @@ class Server{
 			$this->queryHandler = new QueryHandler();
 		}
 
-		foreach($this->getIPBans()->getEntries() as $entry){
-			$this->network->blockAddress($entry->getName(), -1);
+		foreach($this->getIPBans()->getEntries() as $name => $data){
+			$this->network->blockAddress($name, -1);
 		}
 
 		if($this->getProperty("settings.send-usage", true)){
