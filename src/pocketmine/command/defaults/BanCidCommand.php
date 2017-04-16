@@ -42,7 +42,7 @@ class BanCidCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(count($args) === 0){
+		if(count($args) !== 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return false;
@@ -51,7 +51,7 @@ class BanCidCommand extends VanillaCommand{
 		$cid = array_shift($args);
 		$reason = implode(" ", $args);
 
-		$sender->getServer()->getCIDBans()->addBan($cid, $reason, null, $sender->getName());
+		$sender->getServer()->getCIDBans()->addBan($cid, $sender->getName(), $reason, new date("d:M:Y"));
 
 		$player = null;
 

@@ -42,7 +42,7 @@ class BanCidByNameCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(count($args) === 0){
+		if(count($args) !== 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return false;
@@ -54,7 +54,7 @@ class BanCidByNameCommand extends VanillaCommand{
 		if ($sender->getServer()->getPlayer($name) instanceof Player) $target = $sender->getServer()->getPlayer($name);
 		else return false;
 
-		$sender->getServer()->getCIDBans()->addBan($target->getClientId(), $reason, null, $sender->getName());
+		$sender->getServer()->getCIDBans()->addBan($target->getClientId(), $sender->getName(), $reason, new date("d:M:Y"));
 
 		$target->kick($reason !== "" ? "Banned by admin. Reason:" . $reason : "Banned by admin.");
 

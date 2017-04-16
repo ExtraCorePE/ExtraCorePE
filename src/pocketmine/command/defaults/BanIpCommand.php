@@ -43,7 +43,7 @@ class BanIpCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(count($args) === 0){
+		if(count($args) !== 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return false;
@@ -72,7 +72,7 @@ class BanIpCommand extends VanillaCommand{
 	}
 
 	private function processIPBan($ip, CommandSender $sender, $reason){
-		$sender->getServer()->getIPBans()->addBan($ip, $reason, null, $sender->getName());
+		$sender->getServer()->getIPBans()->addBan($ip, $sender->getName(), $reason, new date("d:M:Y"));
 
 		foreach($sender->getServer()->getOnlinePlayers() as $player){
 			if($player->getAddress() === $ip){
