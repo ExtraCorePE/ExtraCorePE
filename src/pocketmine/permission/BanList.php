@@ -102,6 +102,10 @@ class BanList{
 		$this->config->save();
 	}
 	
+	public function getEntries(){
+		return $this->config->getAll();
+	}
+	
 	public function getReason($name){
 		if($this->config->exists($name)){
 			$reason = $this->config->getNested($name."reason");
