@@ -30,28 +30,11 @@ class BanList{
 	/** @var string */
 	private $config;
 
-	/** @var bool */
-	private $enabled = true;
-
 	/**
 	 * @param string $file
 	*/
 	public function __construct(Config $config){
 		$this->config = $config;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isEnabled(){
-		return $this->enabled === true;
-	}
-
-	/**
-	 * @param bool $flag
-	 */
-	public function setEnabled($flag){
-		$this->enabled = (bool) $flag;
 	}
 
 	/**
@@ -61,23 +44,27 @@ class BanList{
 	 */
 	public function isBanned($name){
 		$name = strtolower($name);
-		if(!$this->isEnabled()){
-			return false;
-		}else{
-			return $this->config->exists($name);
-		}
+		return $this->config->exists($name);
 	}
 
 	/**
 	 * @param string    $target
+	 * @param string    $banner
 	 * @param string    $reason
-	 * @param \DateTime $until
+	 * @param \DateTime $date
 	 *
 	 * @return bool
 	 */
-	public function addBan(string $target, string $reason = "Banned by an operator", $until = ""){
-		$this->config->setNested($target."reason", $reason);
-		$this->config->setNested($target."until", $until);
+	public function addBan(string $target, string $banner, string $reason = "Banned by an operator", $date = ""){
+		$array = [
+			$target => [
+				"banner" => $banner,
+				"reason" => $reason,
+				"until" => $date
+			]
+		];
+		$date = array_merge($this->config->getAll(), $array);
+		$this->config->setAll($data);
 		$this->save();
 	
 		return true;
