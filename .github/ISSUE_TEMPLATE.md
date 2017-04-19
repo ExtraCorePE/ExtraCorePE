@@ -1,6 +1,7 @@
 <!-- Thank you for using ExtraCorePE -->
 <!-- These information will be used to improve performance -->
 <!-- Please follow the instructions to create a sentence -->
+<!-- If you do not provide all the information your issue may be closed -->
 
 <!-- Please describe the detailed information of the problem -->
 ## Issues description
