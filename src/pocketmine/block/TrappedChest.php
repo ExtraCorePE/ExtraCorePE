@@ -182,7 +182,8 @@ class TrappedChest extends Solid{
 				}
 			}
 
-			if($player->isCreative() and $player->getServer()->limitedCreative){
+			//if($player->isCreative() and $player->getServer()->limitedCreative){ //[Todo] Add creative setting
+			if($player->isCreative()){
 				return true;
 			}
 			$player->addWindow($chest->getInventory());
