@@ -1531,7 +1531,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$this->server->getPluginManager()->callEvent($ev);
 
 				if(!($revert = $ev->isCancelled())){ //Yes, this is intended
-					if($this->server->netherEnabled){
+					if($this->server->getProperty("level-settings.allow-nether", true)){
 						if($this->isInsideOfPortal()){
 							if($this->portalTime == 0){
 								$this->portalTime = $this->server->getTick();
@@ -1672,8 +1672,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			if($this->server->getProperty("level-settings.allow-nether", true)){
 				if(($this->isCreative() or $this->isSurvival() and $this->server->getTick() - $this->portalTime >= 80) and $this->portalTime > 0){
 					$netherLevel = null;
-					if($this->server->isLevelLoaded($this->server->getProperty("level-settings.level-name", "nether")) or $this->server->loadLevel($this->server->getProperty("level-settings.level-name", "nether"))){		
-						$netherLevel = $this->server->getLevelByName($this->server->getProperty("level-settings.level-name", "nether"));		
+					if($this->server->isLevelLoaded($this->server->getProperty("level-settings.level-name", "nether")) or $this->server->loadLevel($this->server->getProperty("level-settings.level-name", "nether"))){
+						$netherLevel = $this->server->getLevelByName($this->server->getProperty("level-settings.level-name", "nether"));
 					}
 					if($netherLevel instanceof Level){
 						if($this->getLevel() !== $netherLevel){
@@ -1998,11 +1998,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		switch($packet::NETWORK_ID){
 			case ProtocolInfo::REQUEST_CHUNK_RADIUS_PACKET:
-				/*if($this->spawned){
-					$this->viewDistance = $packet->radius ** 2;
-				}*/
 				$pk = new ChunkRadiusUpdatedPacket();
-				$pk->radius = ($this->server->chunkRadius != -1) ? $this->server->chunkRadius : $packet->radius;
+				$pk->radius = (!$this->server->getProperty("chunk-sending.chunk-radius", -1)) ? $this->server->getProperty("chunk-sending.chunk-radius", -1) : $packet->radius;
 				$this->dataPacket($pk);
 				break;
 			case ProtocolInfo::PLAYER_INPUT_PACKET:
@@ -2185,13 +2182,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						if($this->level->useItemOn($blockVector, $item, $packet->face, $packet->fx, $packet->fy, $packet->fz, $this) === true){
 							break;
 						}
-					}elseif(!$this->inventory->getItemInHand()->deepEquals($packet->item)){
+					}elseif(!$this->inventory->getItemInHand()->equals($packet->item)){
 						$this->inventory->sendHeldItem($this);
 					}else{
 						$item = $this->inventory->getItemInHand();
 						$oldItem = clone $item;
 						if($this->level->useItemOn($blockVector, $item, $packet->face, $packet->fx, $packet->fy, $packet->fz, $this)){
-							if(!$item->deepEquals($oldItem) or $item->getCount() !== $oldItem->getCount()){
+							if(!$item->equals($oldItem) or $item->getCount() !== $oldItem->getCount()){
 								$this->inventory->setItemInHand($item);
 								$this->inventory->sendHeldItem($this->hasSpawned);
 							}
@@ -2214,7 +2211,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 					if($this->isCreative()){
 						$item = $this->inventory->getItemInHand();
-					}elseif(!$this->inventory->getItemInHand()->deepEquals($packet->item)){
+					}elseif(!$this->inventory->getItemInHand()->equals($packet->item)){
 						$this->inventory->sendHeldItem($this);
 						break;
 					}else{
@@ -3028,7 +3025,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 								$item = clone $packet->input[$y * 3 + $x];
 
 								foreach($needed as $k => $n){
-									if($n->deepEquals($item, !$n->hasAnyDamageValue(), $n->hasCompoundTag())){
+									if($n->equals($item, !$n->hasAnyDamageValue(), $n->hasCompoundTag())){
 										$remove = min($n->getCount(), $item->getCount());
 										$n->setCount($n->getCount() - $remove);
 										$item->setCount($item->getCount() - $remove);
@@ -3056,7 +3053,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$ingredients = $packet->input;
 					$result = $packet->output[0];
 
-					if(!$canCraft or !$recipe->getResult()->deepEquals($result)){
+					if(!$canCraft or !$recipe->getResult()->equals($result)){
 						$this->server->getLogger()->debug("Unmatched recipe " . $recipe->getId() . " from player " . $this->getName() . ": expected " . $recipe->getResult() . ", got " . $result . ", using: " . implode(", ", $ingredients));
 						$this->inventory->sendContents($this);
 						break;
@@ -3067,7 +3064,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					foreach($ingredients as $ingredient){
 						$slot = -1;
 						foreach($this->inventory->getContents() as $index => $item){
-							if($ingredient->getId() !== 0 and $ingredient->deepEquals($item, !$ingredient->hasAnyDamageValue(), $ingredient->hasCompoundTag()) and ($item->getCount() - $used[$index]) >= 1){
+							if($ingredient->getId() !== 0 and $ingredient->equals($item, !$ingredient->hasAnyDamageValue(), $ingredient->hasCompoundTag()) and ($item->getCount() - $used[$index]) >= 1){
 								$slot = $index;
 								$used[$index]++;
 								break;
@@ -3442,8 +3439,61 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->title = $title;
         $pk->fadeInDuration = $fadein;
         $pk->fadeOutDuration = $fadeout;
+		$pk->duration = $duration;
 		$this->dataPacket($pk);
 	}
+	
+	/**		
+	 * Creates and sends a BossBar to the player		
+	 * 		
+	 * @param text  The BossBar message		
+	 * @param length  The BossBar percentage		
+	 *		
+	 */		
+	public function createBossBar($text = "", $bossID = null){		
+		if($bossID != null){		
+			$pk = new AddEntityPacket();		
+			$pk->eid = $bossID;		
+			$pk->type = 12;		
+			$pk->x = $this->x;		
+			$pk->y = $this->y;		
+			$pk->z = $this->z;		
+			$pk->yaw = 0;		
+			$pk->pitch = 0;		
+			$pk->metadata = [Entity::DATA_LEAD_HOLDER_EID => [Entity::DATA_TYPE_LONG, -1], Entity::DATA_FLAGS => [Entity::DATA_TYPE_LONG, 0 ^ 1 << Entity::DATA_FLAG_SILENT ^ 1 << Entity::DATA_FLAG_INVISIBLE], Entity::DATA_SCALE => [Entity::DATA_TYPE_FLOAT, 0], Entity::DATA_NAMETAG => [Entity::DATA_TYPE_STRING, $text], Entity::DATA_BOUNDING_BOX_WIDTH => [Entity::DATA_TYPE_FLOAT, 0], Entity::DATA_BOUNDING_BOX_HEIGHT => [Entity::DATA_TYPE_FLOAT, 0]];		
+			$pk2 = new BossEventPacket();		
+			$pk2->eid = $bossID;		
+			$pk2->state = 0;		
+			$this->dataPacket($pk);		
+			$this->dataPacket($pk2);		
+		} 		
+		if($bossID == null){		
+			$this->server->getLogger()->info(TextFormat::RED ."Could not Create a Boss Bar\nNo Boss ID was provided");		
+		}		
+	}		
+  		
+	public function updateBossBar($text = "", $bossID = null){		
+		if($bossID != null){		
+			$pk = new SetEntityDataPacket();		
+			$pk->metadata = [Entity::DATA_LEAD_HOLDER_EID => [Entity::DATA_TYPE_LONG, -1], Entity::DATA_FLAGS => [Entity::DATA_TYPE_LONG, 0 ^ 1 << Entity::DATA_FLAG_SILENT ^ 1 << Entity::DATA_FLAG_INVISIBLE], Entity::DATA_SCALE => [Entity::DATA_TYPE_FLOAT, 0], Entity::DATA_NAMETAG => [Entity::DATA_TYPE_STRING, $text], Entity::DATA_BOUNDING_BOX_WIDTH => [Entity::DATA_TYPE_FLOAT, 0], Entity::DATA_BOUNDING_BOX_HEIGHT => [Entity::DATA_TYPE_FLOAT, 0]];		
+			$pk->eid = $bossID;    		
+			$this->dataPacket($pk);		
+		}		
+		if($bossID == null){		
+			$this->server->getLogger()->info(TextFormat::RED ."Could not Update a Boss Bar\nNo Boss ID was provided");		
+		}		
+	}		
+    		
+    public function removeBossBar($bossID = null){		
+		if($bossID != null){		
+			$pk = new RemoveEntityPacket();		
+			$pk->eid = $bossID;    		
+			$this->dataPacket($pk);		
+		}		
+		if($bossID == null){		
+			$this->server->getLogger()->info(TextFormat::RED ."Could not Remove a Boss Bar\nNo Boss ID was provided");		
+		}		
+    }
 
 	/**
 	 * Note for plugin developers: use kick() with the isAdmin
@@ -3716,8 +3766,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		Entity::kill();
 
 		$ev = new PlayerDeathEvent($this, $this->getDrops(), new TranslationContainer($message, $params));
-		$ev->setKeepInventory($this->server->keepInventory);
-		$ev->setKeepExperience($this->server->keepExperience);
+		$ev->setKeepInventory($this->server->getProperty("player.keep-inventory", true));
+		$ev->setKeepExperience($this->server->getProperty("player.keep-experience", true));
 		$this->server->getPluginManager()->callEvent($ev);
 
 		if(!$ev->getKeepInventory()){
@@ -3734,7 +3784,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			}
 		}
 
-		if($this->server->expEnabled and !$ev->getKeepExperience()){
+		if($this->server->getProperty("player.experience", true) and !$ev->getKeepExperience()){
 			$exp = min(91, $this->getTotalXp()); //Max 7 levels of exp dropped
 			$this->getLevel()->spawnXPOrb($this->add(0, 0.2, 0), $exp);
 			$this->setTotalXp(0, true);
