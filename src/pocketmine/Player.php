@@ -215,6 +215,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $deviceOS;
 	protected $gameVersion;
 	protected $startAction = -1;
+	//soon public $protocol = 0;
 	/** @var Vector3 */
 	protected $sleeping = null;
 	protected $clientID = null;
@@ -4088,6 +4089,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	public function isLoaderActive(){
 		return $this->isConnected();
 	}
+	
+	/* 
+	* Soon
+	public function getPlayerProtocol() {
+		if ($this->protocol == 107) {
+ 			return 107;
+ 		}else{
+ 			return 105;
+ 		}
+ 	}
+	*/
 
     /**
      * @param Effect $effect
