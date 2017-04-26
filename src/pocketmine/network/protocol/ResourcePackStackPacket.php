@@ -19,7 +19,6 @@
  *
 */
 
-
 namespace pocketmine\network\protocol;
 
 #include <rules/DataPacket.h>
@@ -39,7 +38,7 @@ class ResourcePackStackPacket extends DataPacket{
 	public $resourcePackStack = [];
 
 	public function decode(){
-		/*$this->mustAccept = $this->getBool();
+		$this->mustAccept = $this->getBool();
 		$behaviorPackCount = $this->getLShort();
 		while($behaviorPackCount-- > 0){
 			$packId = $this->getString();
@@ -52,7 +51,7 @@ class ResourcePackStackPacket extends DataPacket{
 			$packId = $this->getString();
 			$version = $this->getString();
 			$this->resourcePackStack[] = new ResourcePackInfoEntry($packId, $version);
-		}*/
+		}
 	}
 
 	public function encode(){
