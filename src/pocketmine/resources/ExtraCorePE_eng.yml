@@ -195,7 +195,7 @@ spawn-limits:
 
 anonymous-statistics:
  #Sends anonymous statistics for data aggregation, plugin usage tracking
- enabled: true
+ enabled: false
  host: stats.pocketmine.net
 
 commands:
