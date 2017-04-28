@@ -192,7 +192,7 @@ abstract class Liquid extends Transparent{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$this->checkForHarden();
-			$this->getLevel()->scheduleUpdate($this, $this->tickRate());
+			$this->getLevel()->scheduleDelayedBlockUpdate($this, $this->tickRate());
 		}elseif($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->temporalVector === null){
 				$this->temporalVector = new Vector3(0, 0, 0);
@@ -245,10 +245,10 @@ abstract class Liquid extends Transparent{
 						$this->getLevel()->setBlock($this, new Air(), true);
 					}else{
 						$this->getLevel()->setBlock($this, Block::get($this->id, $decay), true);
-						$this->getLevel()->scheduleUpdate($this, $this->tickRate());
+						$this->getLevel()->scheduleDelayedBlockUpdate($this, $this->tickRate());
 					}
 				}elseif($flag){
-					//$this->getLevel()->scheduleUpdate($this, $this->tickRate());
+					//$this->getLevel()->scheduleDelayedBlockUpdate($this, $this->tickRate());
 					//$this->updateFlow();
 				}
 			}else{
@@ -265,13 +265,13 @@ abstract class Liquid extends Transparent{
 				}
 
 				if($decay >= 8){
-					//$this->getLevel()->setBlock($bottomBlock, Block::get($this->id, $decay), true);
-					//$this->getLevel()->scheduleUpdate($bottomBlock, $this->tickRate());
-					$this->flowIntoBlock($bottomBlock, $decay);
+					$this->getLevel()->setBlock($bottomBlock, Block::get($this->id, $decay), true);
+					$this->getLevel()->scheduleDelayedBlockUpdate($bottomBlock, $this->tickRate());
+					//$this->flowIntoBlock($bottomBlock, $decay);
 				}else{
-					//$this->getLevel()->setBlock($bottomBlock, Block::get($this->id, $decay + 8), true);
-					//$this->getLevel()->scheduleUpdate($bottomBlock, $this->tickRate());
-					$this->flowIntoBlock($bottomBlock, $decay | 0x08);
+					$this->getLevel()->setBlock($bottomBlock, Block::get($this->id, $decay + 8), true);
+					$this->getLevel()->scheduleDelayedBlockUpdate($bottomBlock, $this->tickRate());
+					//$this->flowIntoBlock($bottomBlock, $decay | 0x08);
 				}
 			}elseif($decay >= 0 and ($decay === 0 or !$bottomBlock->canBeFlowedInto())){
 				$flags = $this->getOptimalFlowDirections();
@@ -318,7 +318,7 @@ abstract class Liquid extends Transparent{
 			}
 
 			$this->getLevel()->setBlock($block, Block::get($this->getId(), $newFlowDecay), true);
-			$this->getLevel()->scheduleUpdate($block, $this->tickRate());
+			$this->getLevel()->scheduleDelayedBlockUpdate($block, $this->tickRate());
 		}
 	}
 
