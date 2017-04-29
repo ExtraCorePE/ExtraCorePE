@@ -3399,35 +3399,42 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return false;
 	}
 
-    /**
-     * Send a title text or/and with/without a sub title text to a player
+	
+	/**
+     * Send a title text with/without a sub title text to a player
+	 * -1 defines the default value used by the client
      *
-     * @param string $title
+     * @param $title
      * @param string $subtitle
-	 * @param int $fadein
-	 * @param int $duration
-	 * @param int $fadeout
      * @return bool
      */
-	public function sendTitle($title, $subtitle = "", $fadein = 20, $duration = 5, $fadeout = 20){
+	public function sendTitle(string $title, string $subtitle = "", int $fadein = -1, int $fadeout = -1, int $duration = -1){
+          $this->prepareTitle($title, $subtitle, $fadein, $fadeout, $duration); //correct the bug but not optimized
+          $this->prepareTitle($title, $subtitle, $fadein, $fadeout, $duration);
+	}
+	
+	/**
+	 * This code must be changed in the future but currently, send 2 packets fixes the subtitle bug... 
+    */
+ 	public function prepareTitle(string $title, string $subtitle = "", int $fadein = -1, int $fadeout = -1, int $duration = -1){
 		$pk = new SetTitlePacket();
 		$pk->type = SetTitlePacket::TYPE_TITLE;
 		$pk->title = $title;
-        $pk->fadeInDuration = $fadein;
-        $pk->fadeOutDuration = $fadeout;
+		$pk->fadeInDuration = $fadein;
+		$pk->fadeOutDuration = $fadeout;
 		$pk->duration = $duration;
 		$this->dataPacket($pk);
-
 		if($subtitle !== ""){
-			$pk = new SetTitlePacket();
-			$pk->type = SetTitlePacket::TYPE_SUB_TITLE;
-			$pk->title = $subtitle;
-            $pk->fadeInDuration = $fadein;
-            $pk->fadeOutDuration = $fadeout;
-			$pk->duration = $duration;
-			$this->dataPacket($pk);
-		}
-	}
+          $pk = new SetTitlePacket();
+		  $pk->type = SetTitlePacket::TYPE_SUB_TITLE;
+		  $pk->title = $subtitle;
+		  $pk->fadeInDuration = $fadein;
+		  $pk->fadeOutDuration = $fadeout;
+		  $pk->duration = $duration;
+		  $this->dataPacket($pk);
+        }
+    }
+
 
 	/**
 	 * Send an action bar text to a player
