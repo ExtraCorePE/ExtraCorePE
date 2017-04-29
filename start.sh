@@ -53,10 +53,10 @@ if [ "$POCKETMINE_FILE" == "" ]; then
 	    	POCKETMINE_FILE="./ExtraCorePE*.phar"
 	elif [ -f ./ExtraCorePE.phar ]; then
 	    	POCKETMINE_FILE="./ExtraCorePE.phar"
-	elif [ -f ./PocketMine-MP.phar ]; then
-		POCKETMINE_FILE="./PocketMine-MP.phar"
-	elif [ -f ./src/pocketmine/PocketMine.php ]; then
-		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
+	elif [ -f ./ExtraCorePE.phar ]; then
+		POCKETMINE_FILE="./ExtraCorePE.phar"
+	elif [ -f ./src/pocketmine/ExtraCorePE.php ]; then
+		POCKETMINE_FILE="./src/pocketmine/ExtraCorePE.php"
 	else
 		echo "Couldn't find a valid ExtraCorePE installation"
 		exit 1
