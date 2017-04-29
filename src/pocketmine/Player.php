@@ -3399,42 +3399,43 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return false;
 	}
 
-	
 	/**
-     * Send a title text with/without a sub title text to a player
+	 * Send a title text with/without a sub title text to a player
 	 * -1 defines the default value used by the client
-     *
-     * @param $title
-     * @param string $subtitle
-     * @return bool
-     */
+	 *
+	 * @param $title
+	 * @param string $subtitle
+	 * @param int    $fadeIn Duration in ticks for fade-in. If -1 is given, client-sided defaults will be used.
+	 * @param int    $stay Duration in ticks to stay on screen for
+	 * @param int    $fadeOut Duration in ticks for fade-out.
+	 * @return bool
+	 */
 	public function sendTitle(string $title, string $subtitle = "", int $fadein = -1, int $fadeout = -1, int $duration = -1){
           $this->prepareTitle($title, $subtitle, $fadein, $fadeout, $duration); //correct the bug but not optimized
           $this->prepareTitle($title, $subtitle, $fadein, $fadeout, $duration);
 	}
-	
+
 	/**
 	 * This code must be changed in the future but currently, send 2 packets fixes the subtitle bug... 
-    */
+	 */
  	public function prepareTitle(string $title, string $subtitle = "", int $fadein = -1, int $fadeout = -1, int $duration = -1){
 		$pk = new SetTitlePacket();
 		$pk->type = SetTitlePacket::TYPE_TITLE;
 		$pk->title = $title;
-		$pk->fadeInDuration = $fadein;
-		$pk->fadeOutDuration = $fadeout;
+		  $pk->fadeInDuration = $fadein;
+		  $pk->fadeOutDuration = $fadeout;
 		$pk->duration = $duration;
 		$this->dataPacket($pk);
 		if($subtitle !== ""){
-          $pk = new SetTitlePacket();
+          	  $pk = new SetTitlePacket();
 		  $pk->type = SetTitlePacket::TYPE_SUB_TITLE;
 		  $pk->title = $subtitle;
-		  $pk->fadeInDuration = $fadein;
-		  $pk->fadeOutDuration = $fadeout;
+		    $pk->fadeInDuration = $fadein;
+		    $pk->fadeOutDuration = $fadeout;
 		  $pk->duration = $duration;
 		  $this->dataPacket($pk);
         }
     }
-
 
 	/**
 	 * Send an action bar text to a player
