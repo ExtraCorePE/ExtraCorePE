@@ -20,12 +20,12 @@ It can be downloaded [here](https://www.microsoft.com/en-us/download/details.asp
 Type the command based on your OS in your Terminal<br>
 **MacOS:**<br>
 ```
-curl -sL https://raw.githubusercontent.com/PocketMine/php-build-scripts/master/installer.sh | bash -s -
+curl -sL https://raw.githubusercontent.com/ExtraCorePE/ExtraCorePE/master/install.sh | bash -s -
 ```
 
 **Linux:**<br>
 ```
-wget -q -O - https://raw.githubusercontent.com/PocketMine/php-build-scripts/master/installer.sh | bash -s -
+wget -q -O - https://raw.githubusercontent.com/ExtraCorePE/ExtraCorePE/master/install.sh | bash -s -
 ```
 
 
