@@ -2,6 +2,8 @@
 
 linux_php_32="PHP7.tar.gz https://dl.bintray.com/pocketmine/PocketMine/PHP_7.0.6_x86_Linux.tar.gz"
 linux_php_64="PHP7.tar.gz https://dl.bintray.com/pocketmine/PocketMine/PHP_7.0.6_x86-64_Linux.tar.gz"
+osx_php_32="PHP7.tar.gz https://dl.bintray.com/pocketmine/PocketMine/PHP_7.0.3_x86_MacOS.tar.gz"
+osx_php_64="PHP7.tar.gz https://dl.bintray.com/pocketmine/PocketMine/PHP_7.0.3_x86-64_MacOS.tar.gz"
 
 echo "[ExtraCorePE] Do you want to install?"
 echo "(y)es, (n)o"
@@ -35,8 +37,8 @@ fi
 
 if [ ! -d "bin/php7" ]
  then
- echo "[ExtraCorePE] Your running $OSTYPE, Downloading PHP for your systen..."
- uname -m
+ echo "[ExtraCorePE] Your running $OSTYPE $(uname -m), Downloading PHP for your systen..."
+//Linux
 if [ $(uname -m) == x86_64 ] && [ $OSTYPE == linux-gnu ]
  then
  wget -O $linux_php_64 --no-check-certificate
@@ -47,6 +49,21 @@ fi
 if [ $(uname -m) == x86 ] && [ $OSTYPE == linux-gnu ]
  then
  wget -O $linux_php_32 --no-check-certificate
+ tar -xf PHP7.tar.gz
+ echo "Downloaded PHP for x86"
+ sleep 5
+ fi
+//OSX
+if [ $(uname -m) == x86_64 ] && [ $OSTYPE == darwin ]
+ then
+ wget -O $osx_php_64 --no-check-certificate
+ tar -xf PHP7.tar.gz
+ echo "Downloaded PHP for x86-64"
+ sleep 5
+fi
+if [ $(uname -m) == x86 ] && [ $OSTYPE == darwin ]
+ then
+ wget -O $osx_php_32 --no-check-certificate
  tar -xf PHP7.tar.gz
  echo "Downloaded PHP for x86"
  sleep 5
