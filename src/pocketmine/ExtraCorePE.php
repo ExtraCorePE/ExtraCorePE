@@ -112,6 +112,36 @@ namespace pocketmine{
 		}
 	}
 
+	function getTrace($start = 0, $trace = null){
+		if($trace === null){
+			if(function_exists("xdebug_get_function_stack")){
+				$trace = array_reverse(xdebug_get_function_stack());
+			}else{
+				$e = new \Exception();
+				$trace = $e->getTrace();
+			}
+		}
+
+		$messages = [];
+		$j = 0;
+		for($i = (int) $start; isset($trace[$i]); ++$i, ++$j){
+			$params = "";
+			if(isset($trace[$i]["args"]) or isset($trace[$i]["params"])){
+				if(isset($trace[$i]["args"])){
+					$args = $trace[$i]["args"];
+				}else{
+					$args = $trace[$i]["params"];
+				}
+				foreach($args as $name => $value){
+					$params .= (is_object($value) ? get_class($value) . " " . (method_exists($value, "__toString") ? $value->__toString() : "object") : gettype($value) . " " . (is_array($value) ? "Array()" : Utils::printable(@strval($value)))) . ", ";
+				}
+			}
+			$messages[] = "#$j " . (isset($trace[$i]["file"]) ? cleanPath($trace[$i]["file"]) : "") . "(" . (isset($trace[$i]["line"]) ? $trace[$i]["line"] : "") . "): " . (isset($trace[$i]["class"]) ? $trace[$i]["class"] . (($trace[$i]["type"] === "dynamic" or $trace[$i]["type"] === "->") ? "->" : "::") : "") . $trace[$i]["function"] . "(" . Utils::printable(substr($params, 0, -2)) . ")";
+		}
+
+		return $messages;
+	}
+
 	function cleanPath($path){
 		return rtrim(str_replace(["\\", ".php", "phar://", rtrim(str_replace(["\\", "phar://"], ["/", ""], \pocketmine\PATH), "/"), rtrim(str_replace(["\\", "phar://"], ["/", ""], \pocketmine\PLUGIN_PATH), "/")], ["/", "", "", "", ""], $path), "/");
 	}
