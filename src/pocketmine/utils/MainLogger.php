@@ -26,18 +26,16 @@ use pocketmine\Thread;
 use pocketmine\Worker;
 
 class MainLogger extends \AttachableThreadedLogger{
-	protected $logFile;
+	
 	protected $logStream;
 	protected $shutdown;
 	protected $logDebug;
 	private $logResource;
+	
 	/** @var MainLogger */
 	public static $logger = null;
 	
 	private $consoleCallback;
-
-	/** Extra Settings */
-	protected $write = false;
 
 	public $shouldSendMsg = "";
 	public $shouldRecordMsg = false;
@@ -56,18 +54,15 @@ class MainLogger extends \AttachableThreadedLogger{
 	}
 
 	/**
-	 * @param string $logFile
 	 * @param bool   $logDebug
 	 *
 	 * @throws \RuntimeException
 	 */
-	public function __construct($logFile, $logDebug = false){
+	public function __construct($logDebug = false){
 		if(static::$logger instanceof MainLogger){
 			throw new \RuntimeException("MainLogger has been already created");
 		}
 		static::$logger = $this;
-		touch($logFile);
-		$this->logFile = $logFile;
 		$this->logDebug = (bool) $logDebug;
 		$this->logStream = new \Threaded;
 		$this->start();
@@ -249,67 +244,13 @@ class MainLogger extends \AttachableThreadedLogger{
 		}
 	}
 
-	/*public function run(){
-		$this->shutdown = false;
-		if($this->write){
-			$this->logResource = fopen($this->logFile, "a+b");
-			if(!is_resource($this->logResource)){
-				throw new \RuntimeException("Couldn't open log file");
-			}
-
-			while($this->shutdown === false){
-				if(!$this->write) {
-					fclose($this->logResource);
-					break;
-				}
-				$this->synchronized(function(){
-					while($this->logStream->count() > 0){
-						$chunk = $this->logStream->shift();
-						fwrite($this->logResource, $chunk);
-					}
-
-					$this->wait(25000);
-				});
-			}
-
-			if($this->logStream->count() > 0){
-				while($this->logStream->count() > 0){
-					$chunk = $this->logStream->shift();
-					fwrite($this->logResource, $chunk);
-				}
-			}
-
-			fclose($this->logResource);
-		}
-	}*/
-
 	public function run(){
 		$this->shutdown = false;
 		while($this->shutdown === false){
 			$this->synchronized(function(){
-				while($this->logStream->count() > 0){
-					$chunk = $this->logStream->shift();
-					if($this->write){
-						$this->logResource = file_put_contents($this->logFile, $chunk, FILE_APPEND);
-					}
-				}
-
 				$this->wait(200000);
 			});
 		}
-
-		if($this->logStream->count() > 0){
-			while($this->logStream->count() > 0){
-				$chunk = $this->logStream->shift();
-				if($this->write){
-					$this->logResource = file_put_contents($this->logFile, $chunk, FILE_APPEND);
-				}
-			}
-		}
-	}
-
-	public function setWrite($write){
-		$this->write = $write;
 	}
 	
 	public function setConsoleCallback($callback){

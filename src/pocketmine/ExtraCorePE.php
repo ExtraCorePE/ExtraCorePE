@@ -69,7 +69,7 @@ namespace pocketmine{
 		mkdir(\pocketmine\DATA, 0777, true);
 	}
 
-	$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI);
+	$logger = new MainLogger(\pocketmine\ANSI);
 
 	$errors = 0;
 	if(!extension_loaded("curl")){
