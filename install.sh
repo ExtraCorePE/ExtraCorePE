@@ -16,11 +16,8 @@ if [ "$i" == yes ] || [ "$i" == y ]
   sleep 1
  echo "[ExtraCorePE] Loaded!"
   sleep 1
- 
  echo "[ExtraCorePE] Downloading Files..." 
- echo -ne '[#####                  ] (33%)\r'
-  sleep 1  
-  
+ 
 if [ -e "start.sh" ]
  then
  echo "[ExtraCorePE] Could not download 'start.sh' File Already Exists!"
@@ -33,10 +30,7 @@ if [ -d "bin/php7" ]
  then
  echo "[ExtraCorePE] Skipping PHP, it is already installed!";
  echo "If you want to update PHP, delete the bin folder and run this File again"
-fi
-
-if [ ! -d "bin/php7" ]
- then
+else
  echo "[ExtraCorePE] Your running $OSTYPE $(uname -m), Downloading PHP for your systen..."
 //Linux
 if [ $(uname -m) == x86_64 ] && [ $OSTYPE == linux-gnu ]
@@ -44,14 +38,14 @@ if [ $(uname -m) == x86_64 ] && [ $OSTYPE == linux-gnu ]
  wget -O $linux_php_64 --no-check-certificate
  tar -xf PHP7.tar.gz
  echo "Downloaded PHP for x86-64"
- sleep 5
+  sleep 5
 fi
 if [ $(uname -m) == x86 ] && [ $OSTYPE == linux-gnu ]
  then
  wget -O $linux_php_32 --no-check-certificate
  tar -xf PHP7.tar.gz
  echo "Downloaded PHP for x86"
- sleep 5
+  sleep 5
  fi
 //OSX
 if [ $(uname -m) == x86_64 ] && [ $OSTYPE == darwin ]
@@ -59,29 +53,73 @@ if [ $(uname -m) == x86_64 ] && [ $OSTYPE == darwin ]
  wget -O $osx_php_64 --no-check-certificate
  tar -xf PHP7.tar.gz
  echo "Downloaded PHP for x86-64"
- sleep 5
+  sleep 5
 fi
 if [ $(uname -m) == x86 ] && [ $OSTYPE == darwin ]
  then
  wget -O $osx_php_32 --no-check-certificate
  tar -xf PHP7.tar.gz
  echo "Downloaded PHP for x86"
- sleep 5
+  sleep 5
  fi
 fi  
 
- echo -ne '[#############          ] (53%)\r'
-  sleep 1   
- echo -ne '[###############        ] (57%)\r'
-  sleep 1  
- echo -ne '[##################     ] (78%)\r'
-  sleep 1
- echo -ne '[#######################] (100%)\r'
- echo -ne '\n'
+if [ ! -d "src" ]
+ then
  clear
+ echo "[ExtraCorePE] Downloading ExtraCorePE latest..."
+  sleep 1
+ git clone https://github.com/ExtraCorePE/ExtraCorePE.git
+ mv -i ./ExtraCorePE/src/ ./
+  sleep 1
+ echo "[ExtraCorePE] Done Downloading!"
+  clear
+fi
+
  echo "Done!"
- echo "[ExtraCorePE] Run the 'start.sh' file to start the Server!"
- sleep 5
+if [ -d "bin/php7" ] && [ -d "src" ] && [ -e "start.sh" ]
+ then
+ rm PHP7.tar.gz
+ rm -rf ExtraCorePE/
+ echo "Would you like to start the server now?"
+ echo "(y)es, (n)o"
+read a
+if [ "$a" == yes ] || [ "$a" == y ]
+ then 
+ clear
+ sleep 2 
+ echo "Starting..."
+ ./start.sh
+fi
+if [ "$a" == no ] || [ "$a" == n ]
+ then 
+ echo "[ExtraCorePE] Stopping Installer"
+ sleep 2
+ echo "[ExtraCorePE] Stopped!"
+ fi
+fi
+
+if [ ! -d "bin/php7" ]
+ then
+ echo "[Error] Something went wrong with the installation!"
+ echo "'PHP' was not installed"
+ echo "Try running the install.sh file again, if you see this error again use the link below to contact us"
+ echo "Here is our Gitter Chat: https://gitter.im/ExtraCorePE/ExtraCorePE"
+fi
+if [ ! -d "src" ] 
+ then
+ echo "[Error] Something went wrong with the installation!"
+ echo "'src' did now download"
+ echo "Try running the install.sh file again, if you see this error again use the link below to contact us"
+ echo "Here is our Gitter Chat: https://gitter.im/ExtraCorePE/ExtraCorePE"
+fi 
+if [ ! -e "start.sh" ] 
+ then
+ echo "[Error] Something went wrong with the installation!"
+ echo "'start' file did not download"
+ echo "Try running the install.sh file again, if you see this error again use the link below to contact us"
+ echo "Here is our Gitter Chat: https://gitter.im/ExtraCorePE/ExtraCorePE"
+ fi
 fi
 
 if [ "$i" == no ] || [ "$i" == n ]
