@@ -195,7 +195,7 @@ spawn-limits:
 
 anonymous-statistics:
  # Отправляет анонимную статистику для агрегирования данных, отслеживания использования плагинов
- enabled: true
+ enabled: false
  host: stats.pocketmine.net
 
 commands:
