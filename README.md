@@ -16,6 +16,19 @@ Report any issues and we will try to fix them for you. <br>
 Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (For Windows).<br>
 It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)<br>
 
+## Installation
+Type the command based on your OS in your Terminal<br>
+**MacOS:**<br>
+```
+curl -sL https://raw.githubusercontent.com/PocketMine/php-build-scripts/master/installer.sh | bash -s -
+```
+
+**Linux:**<br>
+```
+wget -q -O - https://raw.githubusercontent.com/PocketMine/php-build-scripts/master/installer.sh | bash -s -
+```
+
+
 ## License
 
     This program is free software: you can redistribute it and/or modify
