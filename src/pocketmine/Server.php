@@ -2513,6 +2513,8 @@ class Server{
 			$player->checkNetwork();
 		}
 
+		$this->titleTick();
+
 		if($this->autoSave and ++$this->autoSaveTicker >= $this->autoSaveTicks){
 			$this->autoSaveTicker = 0;
 			$this->doAutoSave();
