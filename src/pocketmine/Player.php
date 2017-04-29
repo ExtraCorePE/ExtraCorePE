@@ -2488,7 +2488,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 						$this->craftingType = self::CRAFTING_SMALL;
 
-						if($this->server->netherEnabled){
+						if($this->server->getProperty("level-settings.allow-nether", true)){
 							if($this->level === $this->server->getLevelByName($this->server->netherName)){
 								$this->teleport($pos = $this->server->getDefaultLevel()->getSafeSpawn());
 							}
