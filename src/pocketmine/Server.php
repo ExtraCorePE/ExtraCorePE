@@ -1488,6 +1488,8 @@ class Server{
 				"online-mode" => false,
 			]);
 
+			$timezone = $this->getProperty("settings.timezone", "UTC");
+			date_default_timezone_set($timezone);
 			$version = $this->getFormattedVersion();
 			$this->version = $version;
 			$code = $this->getCodename();
@@ -1512,9 +1514,9 @@ class Server{
 §6│  §6██╔══╝   ██╔██╗    ██║   ██╔══██╗██╔══██║  §c██║     ██║   ██║██╔══██╗██╔══╝    §2██╔═══╝ ██╔══╝   §6│    §cQuery: §d$query
 §6│  §6███████╗██╔╝ ██╗   ██║   ██║  ██║██║  ██║  §c╚██████╗╚██████╔╝██║  ██║███████╗  §2██║     ███████╗ §6│    §cSSL Extension: §d$ssl
 §6│  §6╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝  §c ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝  §2╚═╝     ╚══════╝ §6│    §cAuthentication: §d$mode
-§6│                                                                                                 │    §cAPI Version: §d$api
-§6│     §e>>>>>    >>>>>    §2Support: §3https://github.com/ExtraCorePE/ExtraCorePE    §e<<<<<    <<<<<     §6│    §cLanguage: §d$lang
-§6│					                                                          │    §cPackage: §d$package
+§6│                                                                                                 │    §cTimezone: §d$timezone
+§6│     §e>>>>>    >>>>>    §2Support: §3https://github.com/ExtraCorePE/ExtraCorePE    §e<<<<<    <<<<<     §6│    §cAPI Version: §d$api
+§6│					                                                          │    Language: §d$lang §cPackage: §d$package
 §6└─────────────────────────────────────────────────────────────────────────────────────────────────┘  §6------------------------------------------");
 
 			$nowLang = $this->getProperty("settings.language", "eng");
