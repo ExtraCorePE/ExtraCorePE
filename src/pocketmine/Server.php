@@ -2516,6 +2516,7 @@ class Server{
 		}
 
 		$this->titleTick();
+		$this->updateQuery();
 
 		if($this->autoSave and ++$this->autoSaveTicker >= $this->autoSaveTicks){
 			$this->autoSaveTicker = 0;
