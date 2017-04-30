@@ -72,16 +72,8 @@ class Effect{
 			$r = ($color >> 16) & 0xff;
 			$g = ($color >> 8) & 0xff;
 			$b = $color & 0xff;
-			self::registerEffect($name, new Effect(
-				$data["id"],
-				"%" . $data["name"],
-				$r,
-				$g,
-				$b,
-				$data["isBad"] ?? false,
-				$data["default_duration"] ?? 300 * 20,
-				$data["has_bubbles"] ?? true
-			));
+			self::registerEffect($name, new Effect($data["id"], "%" . $data["name"], $r, $g, $b, $data["isBad"] ?? false));
+
 		}
 	}
 
@@ -116,23 +108,15 @@ class Effect{
 
 	/** @var int */
 	protected $id;
-
 	protected $name;
-
 	protected $duration;
-
+	protected $amplifier = 0;
 	protected $amplifier;
-
 	protected $color;
-
 	protected $show = true;
-
 	protected $ambient = false;
-
 	protected $bad;
-
 	protected $defaultDuration = 300 * 20;
-
 	protected $hasBubbles = true;
 
 	/**
@@ -282,6 +266,7 @@ class Effect{
 	 * @return bool
 	 */
 	public function canTick(){
+		if($this->amplifier < 0) $this->amplifier = 0;
 		switch($this->id){
 			case Effect::POISON:
 				if(($interval = (25 >> $this->amplifier)) > 0){
@@ -306,9 +291,13 @@ class Effect{
 					return ($this->duration % $interval) === 0;
 				}
 				return true;
-			case Effect::INSTANT_DAMAGE:
-			case Effect::INSTANT_HEALTH:
-				//If forced to last longer than 1 tick, these apply every tick.
+			case Effect::HEALING:
+			case Effect::HARMING:
+				return true;
+			case Effect::SATURATION:
+				if(($interval = (20 >> $this->amplifier)) > 0){
+					return ($this->duration % $interval) === 0;
+				}
 				return true;
 		}
 		return false;
@@ -339,23 +328,35 @@ class Effect{
 					$entity->heal($ev->getAmount(), $ev);
 				}
 				break;
-
 			case Effect::HUNGER:
 				if($entity instanceof Human){
 					$entity->exhaust(0.5 * $this->amplifier, PlayerExhaustEvent::CAUSE_POTION);
 				}
 				break;
-			case Effect::INSTANT_HEALTH:
-				//TODO: add particles (witch spell)
-				if($entity->getHealth() < $entity->getMaxHealth()){
-					$amount = 2 * (2 ** (($this->amplifier + 1) % 32));
-					$entity->heal($amount, new EntityRegainHealthEvent($entity, $amount, EntityRegainHealthEvent::CAUSE_MAGIC));
+			case Effect::HEALING:
+				$level = $this->amplifier + 1;
+				if(($entity->getHealth() + 4 * $level) <= $entity->getMaxHealth()) {
+					$ev = new EntityRegainHealthEvent($entity, 4 * $level, EntityRegainHealthEvent::CAUSE_MAGIC);
+					$entity->heal($ev->getAmount(), $ev);
+				}else{
+					$ev = new EntityRegainHealthEvent($entity, $entity->getMaxHealth() - $entity->getHealth(), EntityRegainHealthEvent::CAUSE_MAGIC);
+					$entity->heal($ev->getAmount(), $ev);
 				}
 				break;
-			case Effect::INSTANT_DAMAGE:
-				//TODO: add particles (witch spell)
-				$amount = 2 * (2 ** (($this->amplifier + 1) % 32));
-				$entity->attack($amount, new EntityDamageEvent($entity, EntityDamageEvent::CAUSE_MAGIC, $amount));
+			case Effect::HARMING:
+				$level = $this->amplifier + 1;
+				if(($entity->getHealth() - 6 * $level) >= 0) {
+					$ev = new EntityDamageEvent($entity, EntityDamageEvent::CAUSE_MAGIC, 6 * $level);
+					$entity->attack($ev->getFinalDamage(), $ev);
+				}else{
+					$ev = new EntityDamageEvent($entity, EntityDamageEvent::CAUSE_MAGIC, $entity->getHealth());
+					$entity->attack($ev->getFinalDamage(), $ev);
+				}
+				break;
+			case Effect::SATURATION:
+				if($entity instanceof Player){
+					$entity->setFood($entity->getFood() + 1); 
+				}
 				break;
 		}
 	}
@@ -445,10 +446,13 @@ class Effect{
 				$attr->setMaxValue($max);
 				break;
 			case Effect::ABSORPTION:
-				$new = (4 * ($this->amplifier + 1));
-				if($new > $entity->getAbsorption()){
-					$entity->setAbsorption($new);
+				if($ev->willModify() and $oldEffect !== null){
+					$value = $entity->getAbsorption() - (4 * ($oldEffect->getAmplifier() + 1));
+				}else{
+					$value = $entity->getAbsorption();
 				}
+				$value += (4 * ($this->amplifier + 1));
+				$entity->setAbsorption($value);
 				break;
 
 		}
@@ -491,7 +495,7 @@ class Effect{
 				$attr->setMaxValue($attr->getMaxValue() - (4 * ($this->amplifier + 1)));
 				break;
 			case Effect::ABSORPTION:
-				$entity->setAbsorption(0);
+				$entity->setAbsorption($entity->getAbsorption() - (4 * ($this->amplifier + 1)));
 				break;
 		}
 	}
