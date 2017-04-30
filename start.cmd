@@ -12,11 +12,11 @@ if exist bin\php\php.exe (
 if exist ExtraCorePE*.phar (
 	set POCKETMINE_FILE=ExtraCorePE*.phar
 ) else (
-	if exist ExtraCorePE.phar (
-		set POCKETMINE_FILE=ExtraCorePE.phar
+	if exist PocketMine-MP.phar (
+		set POCKETMINE_FILE=PocketMine.phar
 	) else (
-	    if exist src\pocketmine\ExtraCorePE.php (
-	        set POCKETMINE_FILE=src\pocketmine\ExtraCorePE.php
+	    if exist src\pocketmine\PocketMine.php (
+	        set POCKETMINE_FILE=src\pocketmine\PocketMine.php
 		) else (
 		    echo "[ERROR] Couldn't find a valid ExtraCorePE installation."
 		    pause
