@@ -111,7 +111,6 @@ class Effect{
 	protected $name;
 	protected $duration;
 	protected $amplifier = 0;
-	protected $amplifier;
 	protected $color;
 	protected $show = true;
 	protected $ambient = false;
