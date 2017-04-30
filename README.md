@@ -14,6 +14,10 @@ ExtraCorePE is supported to Minecraft: Pocket Edition & Windows 10 Edition<br>
 Report any issues and we will try to fix them for you. <br>
 Get old version ExtraCorePE [here](https://github.com/ExtraCorePE/ExtraCorePE/releases)<br>
 
+## ExtraCorePE Servers
+There servers running on ExtraCorePE!
+Coming soon…
+
 ## Resources
 Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (For Windows).<br>
 It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)<br>
