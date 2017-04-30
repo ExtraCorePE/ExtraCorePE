@@ -28,7 +28,7 @@ namespace pocketmine{
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-	const VERSION = "1.0.0";
+	const VERSION = "1.1.0";
 	const API_VERSION = "4.0.0";
 	const CODENAME = "Soleil";
 
