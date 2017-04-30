@@ -5,7 +5,7 @@
 ## Introduction
 ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
-ExtraCorePE supports installer for Linux & MacOS (Windows installer coming soon) <br>
+ExtraCorePE supports installer for Windows & MacOS & Linux <br>
 ExtraCorePE supports disable log setting (super light) <br>
 Contact us on [gitter](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) for support. <br>
 
@@ -21,7 +21,7 @@ It can be downloaded [here](https://www.microsoft.com/en-us/download/details.asp
 Type the command based on your OS in your Terminal (MacOS & Linux) <br>
 **Windows:**<br>
 ```
-Click install.cmd file (coming soon...)
+[WindowsPowerShell] Running install.ps1 file
 ```
 **MacOS:**<br>
 ```
