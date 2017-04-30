@@ -398,7 +398,7 @@ class Effect{
 			$pk->amplifier = $this->getAmplifier();
 			$pk->particles = $this->isVisible();
 			$pk->duration = $this->getDuration();
-			if($ev->willModify()){
+			if($modify){
 				$pk->eventId = MobEffectPacket::EVENT_MODIFY;
 			}else{
 				$pk->eventId = MobEffectPacket::EVENT_ADD;
@@ -414,7 +414,7 @@ class Effect{
 				break;
 			case Effect::SPEED:
 				$attr = $entity->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED);
-				if($ev->willModify() and $oldEffect !== null){
+				if($modify and $oldEffect !== null){
 					$speed = $attr->getValue() / (1 + 0.2 * $oldEffect->getAmplifier());
 				}else{
 					$speed = $attr->getValue();
@@ -424,7 +424,7 @@ class Effect{
 				break;
 			case Effect::SLOWNESS:
 				$attr = $entity->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED);
-				if($ev->willModify() and $oldEffect !== null){
+				if($modify and $oldEffect !== null){
 					$speed = $attr->getValue() / (1 - 0.15 * $oldEffect->getAmplifier());
 				}else{
 					$speed = $attr->getValue();
@@ -435,7 +435,7 @@ class Effect{
 
 			case Effect::HEALTH_BOOST:
 				$attr = $entity->getAttributeMap()->getAttribute(Attribute::HEALTH);
-				if($ev->willModify() and $oldEffect !== null){
+				if($modify and $oldEffect !== null){
 					$max = $attr->getMaxValue() - (4 * ($oldEffect->getAmplifier() + 1));
 				}else{
 					$max = $attr->getMaxValue();
@@ -445,7 +445,7 @@ class Effect{
 				$attr->setMaxValue($max);
 				break;
 			case Effect::ABSORPTION:
-				if($ev->willModify() and $oldEffect !== null){
+				if($modify and $oldEffect !== null){
 					$value = $entity->getAbsorption() - (4 * ($oldEffect->getAmplifier() + 1));
 				}else{
 					$value = $entity->getAbsorption();
