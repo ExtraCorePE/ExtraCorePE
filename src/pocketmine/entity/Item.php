@@ -240,4 +240,5 @@ class Item extends Entity{
 
 		parent::spawnTo($player);
 	}
+
 }

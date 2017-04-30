@@ -21,7 +21,6 @@
 
 namespace pocketmine\entity;
 
-
 interface Attachable{
 
 }
