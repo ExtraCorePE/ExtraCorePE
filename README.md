@@ -16,7 +16,7 @@ Get old version ExtraCorePE [here](https://github.com/ExtraCorePE/ExtraCorePE/re
 
 ## ExtraCorePE Servers
 There servers running on ExtraCorePE!
-Coming soon…
+1) Name: CloudMinePE; IP: CM-PE.ru:19132; Owner: xISRAPILx;
 
 ## Resources
 Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (For Windows).<br>
