@@ -54,7 +54,7 @@ if [ "$POCKETMINE_FILE" == "" ]; then
 	elif [ -f ./ExtraCorePE.phar ]; then
 	    	POCKETMINE_FILE="./ExtraCorePE.phar"
 	elif [ -f ./PocketMine-MP.phar ]; then
-		POCKETMINE_FILE="./PocketMine-MP.phar"
+		POCKETMINE_FILE="./PocketMine.phar"
 	elif [ -f ./src/pocketmine/PocketMine.php ]; then
 		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
 	else

@@ -5,29 +5,42 @@
 ## Introduction
 ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
-ExtraCorePE supports installer for Linux & MacOS (Windows installer coming soon)<br>
+ExtraCorePE supports installer for Windows & MacOS & Linux <br>
+ExtraCorePE supports disable log setting (super light) <br>
 Contact us on [gitter](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) for support. <br>
 
 ## Notice
 ExtraCorePE is supported to Minecraft: Pocket Edition & Windows 10 Edition<br>
 Report any issues and we will try to fix them for you. <br>
+Get old version ExtraCorePE [here](https://github.com/ExtraCorePE/ExtraCorePE/releases)<br>
+
+## ExtraCorePE Servers
+There servers running on ExtraCorePE! To more nice to your server! <br>
+
+Name: **DevServer** (Owner: **ExtraCore**) <br>
+IP: **extracore.net**  (Port: **19132**) <br>
+
+Name: **CloudMinePE** (Owner: **xISRAPILx**) <br>
+IP: **CM-PE.ru** (Port: **19132**) <br>
 
 ## Resources
 Your ExtraCorePE Server needs Visual Studio C++ Redistributable 2015 (For Windows).<br>
 It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)<br>
 
 ## Installation
-Type the command based on your OS in your Terminal<br>
+Type the command based on your OS in your Terminal (MacOS & Linux) <br>
+**Windows:**<br>
+```
+[WindowsPowerShell] Running install.ps1 file
+```
 **MacOS:**<br>
 ```
 curl -sL https://raw.githubusercontent.com/ExtraCorePE/ExtraCorePE/master/install.sh | bash -s -
 ```
-
 **Linux:**<br>
 ```
 wget -q -O - https://raw.githubusercontent.com/ExtraCorePE/ExtraCorePE/master/install.sh | bash -s -
 ```
-
 
 ## License
 

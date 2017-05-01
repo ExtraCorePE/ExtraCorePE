@@ -26,6 +26,8 @@ settings:
  async-workers: 4
  #Folder plugin loader enable setting.
  folder-plugin-loader: true
+ #setting timezone
+ timezone: "UTC"
 
 memory:
  #Global soft memory limit in megabytes. Set to 0 to disable
