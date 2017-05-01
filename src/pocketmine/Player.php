@@ -1817,11 +1817,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->close($this->getLeaveMessage(), "Server is white-listed");
 
 			return;
-		}elseif($this->server->getNameBans()->isBanned(strtolower($this->getName())) or $this->server->getIPBans()->isBanned($this->getAddress()) or $this->server->getCIDBans()->isBanned($this->randomClientId)){
-			$reason = "In dev";
-		    $this->close($this->getLeaveMessage(), TextFormat::RED . "You are banned. Reason: \n" . $reason);
-
-			return;
+		}elseif($this->server->getNameBans()->isBanned($this->getName())){
+			$reason = $this->server->getNameBans()->getReason($this->getName());	
+		}elseif($this->server->getIPBans()->isBanned($this->getAddress())){	
+			$reason = $this->server->getNameBans()->getReason($this->getAddress());	
+		}elseif($this->server->getCIDBans()->isBanned($this->randomClientId)){
+			$reason = $this->server->getNameBans()->getReason($this->randomClientId);	
+		}
+		
+		$this->close($this->getLeaveMessage(), TextFormat::RED . "You are banned.\nReason: " . $reason);
+		
+		return;
 		}
 
 		foreach($this->server->getOnlinePlayers() as $p){
