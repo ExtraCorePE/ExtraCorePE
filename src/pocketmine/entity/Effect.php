@@ -413,7 +413,7 @@ class Effect{
 				break;
 			case Effect::SPEED:
 				$attr = $entity->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED);
-				if($modify and $oldEffect !== null){
+				if($modify and $oldEffect !== null and $attr !== null){
 					$speed = $attr->getValue() / (1 + 0.2 * $oldEffect->getAmplifier());
 				}else{
 					$speed = $attr->getValue();
@@ -423,7 +423,7 @@ class Effect{
 				break;
 			case Effect::SLOWNESS:
 				$attr = $entity->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED);
-				if($modify and $oldEffect !== null){
+				if($modify and $oldEffect !== null and $attr !== null){
 					$speed = $attr->getValue() / (1 - 0.15 * $oldEffect->getAmplifier());
 				}else{
 					$speed = $attr->getValue();
@@ -434,7 +434,7 @@ class Effect{
 
 			case Effect::HEALTH_BOOST:
 				$attr = $entity->getAttributeMap()->getAttribute(Attribute::HEALTH);
-				if($modify and $oldEffect !== null){
+				if($modify and $oldEffect !== null and $attr !== null){
 					$max = $attr->getMaxValue() - (4 * ($oldEffect->getAmplifier() + 1));
 				}else{
 					$max = $attr->getMaxValue();
@@ -444,7 +444,7 @@ class Effect{
 				$attr->setMaxValue($max);
 				break;
 			case Effect::ABSORPTION:
-				if($modify and $oldEffect !== null){
+				if($modify and $oldEffect !== null and $attr !== null){
 					$value = $entity->getAbsorption() - (4 * ($oldEffect->getAmplifier() + 1));
 				}else{
 					$value = $entity->getAbsorption();
