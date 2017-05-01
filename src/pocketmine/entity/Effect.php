@@ -72,8 +72,7 @@ class Effect{
 			$r = ($color >> 16) & 0xff;
 			$g = ($color >> 8) & 0xff;
 			$b = $color & 0xff;
-			self::registerEffect($name, new Effect($data["id"], "%" . $data["name"], $r, $g, $b, $data["isBad"] ?? false));
-
+			self::registerEffect($name, new Effect($data["id"], "%" . $data["name"], $r, $g, $b, $data["isBad"] ?? false));           
 		}
 	}
 
@@ -463,10 +462,6 @@ class Effect{
 	 * @param Entity $entity
 	 */
 	public function remove(Entity $entity){
-		$entity->getLevel()->getServer()->getPluginManager()->callEvent($ev = new EntityEffectRemoveEvent($entity, $this));
-		if($ev->isCancelled()){
-			return;
-		}
 		if($entity instanceof Player){
 			$pk = new MobEffectPacket();
 			$pk->eid = $entity->getId();

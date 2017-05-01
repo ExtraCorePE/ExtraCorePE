@@ -7,8 +7,7 @@
   "slowness": {
     "id": 2,
     "color": "5a6c81",
-    "name": "potion.moveSlowdown",
-    "isBad": true
+    "name": "potion.moveSlowdown"
   },
   "haste": {
     "id": 3,
@@ -18,8 +17,7 @@
   "mining_fatigue": {
     "id": 4,
     "color": "4a4217",
-    "name": "potion.digSlowDown",
-    "isBad": true
+    "name": "potion.digSlowDown"
   },
   "strength": {
     "id": 5,
@@ -37,7 +35,6 @@
     "id": 7,
     "color": "430a09",
     "name": "potion.harm",
-    "isBad": true,
     "default_duration": 1,
     "has_bubbles": false
   },
@@ -49,8 +46,7 @@
   "nausea": {
     "id": 9,
     "color": "551d4a",
-    "name": "potion.confusion",
-    "isBad": true
+    "name": "potion.confusion"
   },
   "regeneration": {
     "id": 10,
@@ -80,8 +76,7 @@
   "blindness": {
     "id": 15,
     "color": "1f1f23",
-    "name": "potion.blindness",
-    "isBad": true
+    "name": "potion.blindness"
   },
   "night_vision": {
     "id": 16,
@@ -91,26 +86,22 @@
   "hunger": {
     "id": 17,
     "color": "587653",
-    "name": "potion.hunger",
-    "isBad": true
+    "name": "potion.hunger"
   },
   "weakness": {
     "id": 18,
     "color": "484d48",
-    "name": "potion.weakness",
-    "isBad": true
+    "name": "potion.weakness"
   },
   "poison": {
     "id": 19,
     "color": "4e9331",
-    "name": "potion.poison",
-    "isBad": true
+    "name": "potion.poison"
   },
   "wither": {
     "id": 20,
     "color": "352a27",
-    "name": "potion.wither",
-    "isBad": true
+    "name": "potion.wither"
   },
   "health_boost": {
     "id": 21,
