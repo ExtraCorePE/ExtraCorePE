@@ -1833,6 +1833,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			
 			return;			
 		}
+		
+		if($this->hasPermission(Server::BROADCAST_CHANNEL_USERS)){
+			$this->server->getPluginManager()->subscribeToPermission(Server::BROADCAST_CHANNEL_USERS, $this);
+		}
 
 		foreach($this->server->getOnlinePlayers() as $p){
 			if($p !== $this and strtolower($p->getName()) === strtolower($this->getName())){
