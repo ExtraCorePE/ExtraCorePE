@@ -1,3 +1,5 @@
+![ExtraCorePE](https://github.com/ExtraCorePE/ExtraCorePE/blob/master/.github/ExtraCoreLogo.jpg)</br>
+
 ## ExtraCorePE
 [![Travis-CI](https://travis-ci.org/ExtraCorePE/ExtraCorePE.svg?branch=master)](https://travis-ci.org/ExtraCorePE/ExtraCorePE)
 [![Gitter](https://badges.gitter.im/ExtraCorePE/ExtraCorePE.svg)](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
