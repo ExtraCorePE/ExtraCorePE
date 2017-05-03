@@ -2256,8 +2256,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                         ])
                     ]);
 
-					$entity = null;
-					$reduce = true;
+		$entity = null;
+		$reduce = true;
 
                     switch ($item->getId()){
                         case Item::FISHING_ROD:
@@ -2305,7 +2305,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                             break;
 
                         case Item::SPLASH_POTION:
-                            if($this->server->allowSplashPotion){
                                 $f = 1.1;
                                 $nbt["PotionId"] = new ShortTag("PotionId", $item->getDamage());
                                 $entity = Entity::createEntity("ThrownPotion", $this->getLevel(), $nbt, $this);
@@ -2315,7 +2314,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                                     $entity->kill();
                                 }
                                 break;
-                            }
 
                         case Item::ENDER_PEARL:
                             if(floor(($time = microtime(true)) - $this->lastEnderPearlUse) >= 1) {
@@ -2325,7 +2323,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                                 $this->server->getPluginManager()->callEvent($ev = new ProjectileLaunchEvent($entity));
                                 if ($ev->isCancelled()) {
                                     $entity->kill();
-                                } else {
+                                }else{
                                     $this->lastEnderPearlUse = $time;
                                 }
                                 break;
