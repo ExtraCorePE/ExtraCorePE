@@ -2,107 +2,62 @@
 
 /*
  *
- *    ______      _              _____               _____  ______ 
- *   |  ____|    | |            / ____|             |  __ \|  ____|
- *   | |__  __  _| |_ _ __ __ _| |     ___  _ __ ___| |__) | |__   
- *   |  __| \ \/ / __| '__/ _` | |    / _ \| '__/ _ \  ___/|  __|  
- *   | |____ >  <| |_| | | (_| | |___| (_) | | |  __/ |    | |____ 
- *   |______/_/\_\\__|_|  \__,_|\_____\___/|_|  \___|_|    |______|
- *
+ *  ____            _        _   __  __ _                  __  __ ____
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * @author ExtraCorePE
- * @link http://www.github.com/ExtraCorePE/ExtraCorePE
- * 
+ * @author PocketMine Team
+ * @link http://www.pocketmine.net/
  *
+ *
+*/
+
+/**
+ * All the entity classes
  */
-
 namespace pocketmine\entity;
-
-use pocketmine\Server;
-use pocketmine\Player;
-use pocketmine\plugin\Plugin;
 
 use pocketmine\block\Block;
 use pocketmine\block\Fire;
 use pocketmine\block\Portal;
+
 use pocketmine\block\Water;
 use pocketmine\block\SlimeBlock;
-
-use pocketmine\entity\animal\Chicken;
-use pocketmine\entity\animal\Cow;
-use pocketmine\entity\animal\IronGolem;
-use pocketmine\entity\animal\Lightning;
-use pocketmine\entity\animal\Mooshroom;
-use pocketmine\entity\animal\Ocelot;
-use pocketmine\entity\animal\Pig;
-use pocketmine\entity\animal\Rabbit;
-use pocketmine\entity\animal\Sheep;
-use pocketmine\entity\animal\SnowGolem;
-use pocketmine\entity\animal\Wolf;
-
-use pocketmine\entity\entity\FallingSand;
-use pocketmine\entity\entity\LeashKnot;
-use pocketmine\entity\entity\Painting;
-use pocketmine\entity\entity\PrimedTNT;
-use pocketmine\entity\entity\XPOrb;
-
-use pocketmine\entity\living\Camera;
-use pocketmine\entity\living\Horse;
-use pocketmine\entity\Human;
-use pocketmine\entity\living\MagmaCube;
-use pocketmine\entity\living\Slime;
-use pocketmine\entity\living\Villager;
-
-use pocketmine\entity\monster\Bat;
-use pocketmine\entity\monster\Blaze;
-use pocketmine\entity\monster\CaveSpider;
-use pocketmine\entity\monster\Creeper;
-use pocketmine\entity\monster\ElderGuardian;
-use pocketmine\entity\monster\EnderDragon;
-use pocketmine\entity\monster\Enderman;
-use pocketmine\entity\monster\Ghast;
-use pocketmine\entity\monster\Guardian;
-use pocketmine\entity\monster\Husk;
-use pocketmine\entity\monster\PigZombie;
-use pocketmine\entity\monster\PolarBear;
-use pocketmine\entity\monster\Shulker;
-use pocketmine\entity\monster\Silverfish;
-use pocketmine\entity\monster\Skeleton;
-use pocketmine\entity\monster\Spider;
-use pocketmine\entity\monster\Squid;
-use pocketmine\entity\monster\Stray;
-use pocketmine\entity\monster\Witch;
-use pocketmine\entity\monster\Wither;
-use pocketmine\entity\monster\WitherSkeleton;
-use pocketmine\entity\monster\Zombie;
-use pocketmine\entity\monster\ZombieVillager;
-
-use pocketmine\entity\projectile\Arrow;
-use pocketmine\entity\projectile\BlazeFireball;
-use pocketmine\entity\projectile\BlueWitherSkull;
-use pocketmine\entity\projectile\DragonFireBall;
-use pocketmine\entity\projectile\Egg;
-use pocketmine\entity\projectile\EnderPearl;
-use pocketmine\entity\projectile\FishingHook;
-use pocketmine\entity\projectile\GhastFireball;
-use pocketmine\entity\projectile\ShulkerBullet;
-use pocketmine\entity\projectile\Snowball;
-use pocketmine\entity\projectile\ThrownExpBottle;
-use pocketmine\entity\projectile\ThrownPotion;
-
-use pocketmine\entity\vehicle\Boat;
-use pocketmine\entity\vehicle\EnderCrystal;
-use pocketmine\entity\vehicle\Minecart;
-use pocketmine\entity\vehicle\MinecartChest;
-use pocketmine\entity\vehicle\MinecartHopper;
-use pocketmine\entity\vehicle\MinecartTNT;
-
+use pocketmine\entity\Blaze;
+use pocketmine\entity\Ghast;
+use pocketmine\entity\Husk;
+use pocketmine\entity\LavaSlime;
+use pocketmine\entity\Silverfish;
+use pocketmine\entity\Skeleton;
+use pocketmine\entity\Slime;
+use pocketmine\entity\Stray;
+use pocketmine\entity\Witch;
+use pocketmine\entity\Wither;
+use pocketmine\entity\Zombie;
+use pocketmine\entity\ZombieVillager;
 use pocketmine\entity\Item as DroppedItem;
+use pocketmine\entity\CaveSpider;
+use pocketmine\entity\Enderman;
+use pocketmine\entity\EnderDragon;
+use pocketmine\entity\PigZombie;
+use pocketmine\entity\Spider;
+use pocketmine\entity\Bat;
+use pocketmine\entity\Chicken;
+use pocketmine\entity\Cow;
+use pocketmine\entity\Horse;
+use pocketmine\entity\Mooshroom;
+use pocketmine\entity\Pig;
+use pocketmine\entity\Rabbit;
+use pocketmine\entity\Sheep;
+use pocketmine\entity\Squid;
+use pocketmine\entity\Villager;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDespawnEvent;
 use pocketmine\event\entity\EntityEffectAddEvent;
@@ -113,9 +68,7 @@ use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\event\entity\EntitySpawnEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\Timings;
-
 use pocketmine\item\Elytra;
-
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\level\Location;
@@ -125,7 +78,6 @@ use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Math;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
-
 use pocketmine\metadata\Metadatable;
 use pocketmine\metadata\MetadataValue;
 use pocketmine\nbt\tag\ByteTag;
@@ -136,11 +88,13 @@ use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
-
 use pocketmine\network\protocol\MobEffectPacket;
 use pocketmine\network\protocol\RemoveEntityPacket;
 use pocketmine\network\protocol\SetEntityDataPacket;
 use pocketmine\network\protocol\SetEntityLinkPacket;
+use pocketmine\Player;
+use pocketmine\plugin\Plugin;
+use pocketmine\Server;
 
 abstract class Entity extends Location implements Metadatable{
 
@@ -166,7 +120,7 @@ abstract class Entity extends Location implements Metadatable{
 	const DATA_AIR = 7; //short
 	const DATA_POTION_COLOR = 8; //int (ARGB!)
 	const DATA_POTION_AMBIENT = 9; //byte
-
+	
 	/* 27 (byte) player-specific flags
 	 * 28 (int) player "index"?
 	 * 29 (block coords) bed position */
@@ -191,16 +145,7 @@ abstract class Entity extends Location implements Metadatable{
 	/* 56 (vector3f)
 	 * 57 (byte)
 	 * 58 (float)
-	 * 59 (float)
-	 * 60 (float) */
-	const DATA_AREA_EFFECT_CLOUD_RADIUS = 61; //float
-	const DATA_AREA_EFFECT_CLOUD_WAITING = 62; //int
-	const DATA_AREA_EFFECT_CLOUD_PARTICLE_ID = 63; //int
-	/* 64 (int), shulker-related
-	 * 65 (byte), shulker-related
-	 * 66 (short) shulker-related
-	 * 67 (unknown), shulker-related */
-	const DATA_TRADING_PLAYER_EID = 68; //long
+	 * 59 (float) */
 
 	const DATA_FLAG_ONFIRE = 0;
 	const DATA_FLAG_SNEAKING = 1;
@@ -208,32 +153,32 @@ abstract class Entity extends Location implements Metadatable{
 	const DATA_FLAG_SPRINTING = 3;
 	const DATA_FLAG_ACTION = 4;
 	const DATA_FLAG_INVISIBLE = 5;
-	const DATA_FLAG_TEMPTED = 6;
+	const DATA_FLAG_TEMPTED = 6; //???
 	const DATA_FLAG_INLOVE = 7;
 	const DATA_FLAG_SADDLED = 8;
 	const DATA_FLAG_POWERED = 9;
-	const DATA_FLAG_IGNITED = 10;
+	const DATA_FLAG_IGNITED = 10; //for creepers?
 	const DATA_FLAG_BABY = 11;
-	const DATA_FLAG_CONVERTING = 12;
+	const DATA_FLAG_CONVERTING = 12; //???
 	const DATA_FLAG_CRITICAL = 13;
 	const DATA_FLAG_CAN_SHOW_NAMETAG = 14;
 	const DATA_FLAG_ALWAYS_SHOW_NAMETAG = 15;
 	const DATA_FLAG_IMMOBILE = 16, DATA_FLAG_NO_AI = 16;
 	const DATA_FLAG_SILENT = 17;
 	const DATA_FLAG_WALLCLIMBING = 18;
-	const DATA_FLAG_RESTING = 19;
+	const DATA_FLAG_RESTING = 19; //for bats?
 	const DATA_FLAG_SITTING = 20;
 	const DATA_FLAG_ANGRY = 21;
-	const DATA_FLAG_INTERESTED = 22;
+	const DATA_FLAG_INTERESTED = 22; //for mobs following players with food?
 	const DATA_FLAG_CHARGED = 23;
 	const DATA_FLAG_TAMED = 24;
 	const DATA_FLAG_LEASHED = 25;
-	const DATA_FLAG_SHEARED = 26;
+	const DATA_FLAG_SHEARED = 26; //for sheep
 	const DATA_FLAG_GLIDING = 27, DATA_FLAG_FALL_FLYING = 27;
-	const DATA_FLAG_ELDER = 28;
+	const DATA_FLAG_ELDER = 28; //elder guardian
 	const DATA_FLAG_MOVING = 29;
-	const DATA_FLAG_BREATHING = 30;
-	const DATA_FLAG_CHESTED = 31;
+	const DATA_FLAG_BREATHING = 30; //hides bubbles if true
+	const DATA_FLAG_CHESTED = 31; //for mules?
 	const DATA_FLAG_STACKABLE = 32;
 	const DATA_FLAG_IDLING = 36;
 
@@ -251,33 +196,24 @@ abstract class Entity extends Location implements Metadatable{
 		Entity::registerEntity(Arrow::class);
 		Entity::registerEntity(Bat::class);
 		Entity::registerEntity(Blaze::class);
-		Entity::registerEntity(BlazeFireball::class);
-		Entity::registerEntity(BlueWitherSkull::class);
 		Entity::registerEntity(Boat::class);
-		Entity::registerEntity(Camera::class);
 		Entity::registerEntity(CaveSpider::class);
 		Entity::registerEntity(Chicken::class);
 		Entity::registerEntity(Cow::class);
 		Entity::registerEntity(Creeper::class);
 		Entity::registerEntity(DroppedItem::class);
-		Entity::registerEntity(DragonFireBall::class);
 		Entity::registerEntity(Egg::class);
-		Entity::registerEntity(ElderGuardian::class);
-		Entity::registerEntity(EnderCrystal::class);
-		Entity::registerEntity(EnderDragon::class);
 		Entity::registerEntity(Enderman::class);
+		Entity::registerEntity(EnderDragon::class);
 		Entity::registerEntity(EnderPearl::class);
 		Entity::registerEntity(FallingSand::class);
 		Entity::registerEntity(FishingHook::class);
 		Entity::registerEntity(Ghast::class);
-		Entity::registerEntity(GhastFireball::class);
-		Entity::registerEntity(Guardian::class);
 		Entity::registerEntity(Horse::class);
 		Entity::registerEntity(Husk::class);
 		Entity::registerEntity(IronGolem::class);
-		Entity::registerEntity(LeashKnot::class);
+		Entity::registerEntity(LavaSlime::class); //Magma Cube
 		Entity::registerEntity(Lightning::class);
-		Entity::registerEntity(MagmaCube::class);
 		Entity::registerEntity(Minecart::class);
 		Entity::registerEntity(MinecartChest::class);
 		Entity::registerEntity(MinecartHopper::class);
@@ -287,12 +223,9 @@ abstract class Entity extends Location implements Metadatable{
 		Entity::registerEntity(Painting::class);
 		Entity::registerEntity(Pig::class);
 		Entity::registerEntity(PigZombie::class);
-		Entity::registerEntity(PolarBear::class);
 		Entity::registerEntity(PrimedTNT::class);
 		Entity::registerEntity(Rabbit::class);
 		Entity::registerEntity(Sheep::class);
-		Entity::registerEntity(Shulker::class);
-		Entity::registerEntity(ShulkerBullet::class);
 		Entity::registerEntity(Silverfish::class);
 		Entity::registerEntity(Skeleton::class);
 		Entity::registerEntity(Slime::class);
@@ -306,12 +239,12 @@ abstract class Entity extends Location implements Metadatable{
 		Entity::registerEntity(Villager::class);
 		Entity::registerEntity(Witch::class);
 		Entity::registerEntity(Wither::class);
-		Entity::registerEntity(WitherSkeleton::class);
 		Entity::registerEntity(Wolf::class);
 		Entity::registerEntity(XPOrb::class);
 		Entity::registerEntity(Zombie::class);
 		Entity::registerEntity(ZombieVillager::class);
-		Entity::registerEntity(Human::class);
+
+		Entity::registerEntity(Human::class, true);
 	}
 
 	/**
