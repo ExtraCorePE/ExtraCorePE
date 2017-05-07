@@ -1459,7 +1459,7 @@ class Server{
 			}
 
 			$this->languageConfig = new Config("language.yml", Config::YAML, []);
-			$this->config = new Config($configPath = $this->dataPath . "ExtraCorePE.yml", Config::YAML, []);
+			$this->config = new Config($configPath = $this->dataPath . "ExtraCorePE.yml", Config::YAML);
 			$this->console = new CommandReader($logger);
 			$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
 				"motd" => "Minecraft: PE Server",
@@ -1527,7 +1527,6 @@ class Server{
 				unset($this->propertyCache["settings.language"]);
 			}
 
-			//$this->languageConfig = new Config("language.yml", Config::YAML, []);
 			$selectLang = $this->languageConfig->get("language", "eng");
 
 			if($nowLang != $selectLang){
@@ -2048,11 +2047,7 @@ class Server{
 	 * @param string $msg
 	 */
 	public function shutdown(bool $restart = false, string $msg = ""){
-		/*if($this->isRunning){
-			$killer = new ServerKiller(90);
-			$killer->start();
-			$killer->kill();
-		}*/
+		$this->config->save();
 		
 		$this->getPluginManager()->callEvent($ev = new event\server\ServerShutdownEvent());
  		if($ev->isCancelled(true)) return;
@@ -2067,7 +2062,7 @@ class Server{
 		if($this->hasStopped){
 			return;
 		}
-
+		$this->config->save();
 		try{
 			if(!$this->isRunning()){
 				$this->sendUsage(SendUsageTask::TYPE_CLOSE);
