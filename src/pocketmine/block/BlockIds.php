@@ -2,22 +2,24 @@
 
 /*
  *
- *  _____   _____   __   _   _   _____  __    __  _____
- * /  ___| | ____| |  \ | | | | /  ___/ \ \  / / /  ___/
- * | |     | |__   |   \| | | | | |___   \ \/ /  | |___
- * | |  _  |  __|  | |\   | | | \___  \   \  /   \___  \
- * | |_| | | |___  | | \  | | |  ___| |   / /     ___| |
- * \_____/ |_____| |_|  \_| |_| /_____/  /_/     /_____/
+ *    ______      _              _____               _____  ______ 
+ *   |  ____|    | |            / ____|             |  __ \|  ____|
+ *   | |__  __  _| |_ _ __ __ _| |     ___  _ __ ___| |__) | |__   
+ *   |  __| \ \/ / __| '__/ _` | |    / _ \| '__/ _ \  ___/|  __|  
+ *   | |____ >  <| |_| | | (_| | |___| (_) | | |  __/ |    | |____ 
+ *   |______/_/\_\\__|_|  \__,_|\_____\___/|_|  \___|_|    |______|
+ *
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * @author iTX Technologies
- * @link https://itxtech.org
+ * @author ExtraCorePE
+ * @link http://www.github.com/ExtraCorePE/ExtraCorePE
+ * 
  *
-*/
+ */
 
 namespace pocketmine\block;
 
@@ -161,7 +163,7 @@ interface BlockIds{
 	const SPRUCE_WOOD_STAIRS = 134; const SPRUCE_WOODEN_STAIRS = 134;
 	const BIRCH_WOOD_STAIRS = 135; const BIRCH_WOODEN_STAIRS = 135;
 	const JUNGLE_WOOD_STAIRS = 136; const JUNGLE_WOODEN_STAIRS = 136;
-	const COMMAND_BLOCK = 137; 
+	const COMMAND_BLOCK = 137;
 	const BEACON = 138;
 	const COBBLESTONE_WALL = 139; const COBBLE_WALL = 139; const STONE_WALL = 139;
 	const FLOWER_POT_BLOCK = 140;
@@ -184,7 +186,7 @@ interface BlockIds{
 	const DOUBLE_WOOD_SLAB = 157; const DOUBLE_WOODEN_SLAB = 157; const DOUBLE_WOOD_SLABS = 157; const DOUBLE_WOODEN_SLABS = 157;
 	const WOOD_SLAB = 158; const WOODEN_SLAB = 158; const WOOD_SLABS = 158; const WOODEN_SLABS = 158;
 	const STAINED_CLAY = 159; const STAINED_HARDENED_CLAY = 159;
-
+	const STAINED_GLASS_PANE = 160; const STAINED_GLASS_PANEL = 160;
 	const LEAVES2 = 161;
 	const WOOD2 = 162; const TRUNK2 = 162; const LOG2 = 162;
 	const ACACIA_WOOD_STAIRS = 163; const ACACIA_WOODEN_STAIRS = 163;
@@ -211,6 +213,8 @@ interface BlockIds{
 	const JUNGLE_FENCE_GATE = 185; const FENCE_GATE_JUNGLE = 185;
 	const DARK_OAK_FENCE_GATE = 186; const FENCE_GATE_DARK_OAK = 186;
 	const ACACIA_FENCE_GATE = 187; const FENCE_GATE_ACACIA = 187;
+	const REPEATING_COMMAND_BLOCK = 188;
+	const CHAIN_COMMAND_BLOCK = 189;
 
 	const SPRUCE_DOOR_BLOCK = 193;
 	const BIRCH_DOOR_BLOCK = 194;
@@ -225,9 +229,32 @@ interface BlockIds{
 	const PURPUR_STAIRS = 203;
 
 	const END_STONE_BRICKS = 206;
+	const FROSTED_ICE = 207;
 	const END_ROD = 208;
 
+	const SHULKER_BOX = 218;
+	const PURPLE_GLAZED_TERRACOTTA = 219;
+	const WHITE_GLAZED_TERRACOTTA = 220;
+	const ORANGE_GLAZED_TERRACOTTA = 221;
+	const MAGENTA_GLAZED_TERRACOTTA = 222;
+	const LIGHT_BLUE_GLAZED_TERRACOTTA = 223;
+	const YELLOW_GLAZED_TERRACOTTA = 224;
+	const LIME_GLAZED_TERRACOTTA = 225;
+	const PINK_GLAZED_TERRACOTTA = 226;
+	const GRAY_GLAZED_TERRACOTTA = 227;
+	const LIGHT_GRAY_GLAZED_TERRACOTTA = 228;
+	const CYAH_GLAZED_TERRACOTTA = 229;
+
+	const BLUE_GLAZED_TERRACOTTA = 231;
+	const BROWN_GLAZED_TERRACOTTA = 232;
+	const GREEN_GLAZED_TERRACOTTA = 233;
+	const RED_GLAZED_TERRACOTTA = 234;
+	const BLACK_GLAZED_TERRACOTTA = 235;
+	const CONCRETE = 236;
+	const CONCRETE_POWDER = 237;
+
 	const CHORUS_PLANT = 240;
+	const STAINED_GLASS = 241;
 
 	const PODZOL = 243;
 	const BEETROOT_BLOCK = 244;
@@ -238,5 +265,6 @@ interface BlockIds{
 	const ATEUPD_BLOCK = 249;
 	const BLOCK_MOVED_BY_PISTON = 250;
 	const OBSERVER = 251;
+
 	const INFO_RESERVED6 = 255;
 }

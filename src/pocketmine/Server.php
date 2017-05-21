@@ -577,6 +577,13 @@ class Server{
 	}
 
 	/**
+	 * @return int
+	 */
+	public  function  getInventorySlots() {
+		return $this->getConfigInt("Inventory-slots", 36);
+	}
+
+	/**
 	 * @return \ClassLoader
 	 */
 	public function getLoader(){
@@ -1486,6 +1493,7 @@ class Server{
 				"rcon.password" => substr(base64_encode(random_bytes(20)), 3, 10),
 				"auto-save" => true,
 				"online-mode" => false,
+				"inventory-slots" => 36,
 			]);
 
 			$timezone = $this->getProperty("settings.timezone", "UTC");

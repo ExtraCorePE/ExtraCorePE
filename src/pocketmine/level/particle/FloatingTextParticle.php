@@ -88,7 +88,7 @@ class FloatingTextParticle extends Particle{
 			$pk->eid = $this->entityId;
 			$pk->type = ItemEntity::NETWORK_ID;
 			$pk->x = $this->x;
-			$pk->y = $this->y + 0.15;
+			$pk->y = $this->y - 0.75;
 			$pk->z = $this->z;
 			$pk->speedX = 0;
 			$pk->speedY = 0;
