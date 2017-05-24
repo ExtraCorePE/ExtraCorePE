@@ -63,7 +63,7 @@ class Obsidian extends Solid{
 	public function onBreak(Item $item) {
 		parent::onBreak($item);
 		
-		if($this->getLevel()->getServer()->netherEnabled){
+		if($this->server->getProperty("level-settings.allow-nether", true)){
 			for($i = 0;$i <= 6;$i++){
 				if($this->getSide($i)->getId() == self::PORTAL){
 					break;
