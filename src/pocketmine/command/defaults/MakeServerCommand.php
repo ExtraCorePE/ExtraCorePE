@@ -10,10 +10,10 @@ class MakeServerCommand extends VanillaCommand{
 	public function __construct($name){
 		parent::__construct(
 			$name,
-			"%tesseract.command.makeserver.description",
-			"%tesseract.command.makeserver.usage"
+			"%pocketmine.command.makeserver.description",
+			"%pocketmine.command.makeserver.usage"
 		);
-		$this->setPermission("tesseract.command.makeserver");
+		$this->setPermission("pocketmine.command.makeserver");
 	}
 
 	public function execute(CommandSender $sender, $commandLabel, array $args){
@@ -49,7 +49,7 @@ class MakeServerCommand extends VanillaCommand{
 				continue;
 			}
 			$phar->addFile($file, $path);
-			$sender->sendMessage("[Tesseract] Adding $path");
+			$sender->sendMessage("[ExtraCorePE] Adding $path");
 		}
 		foreach($phar as $file => $finfo){
 			/** @var \PharFileInfo $finfo */
