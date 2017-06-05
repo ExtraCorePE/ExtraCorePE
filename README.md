@@ -1,4 +1,4 @@
-![ExtraCorePE](https://github.com/ExtraCorePE/ExtraCorePE/blob/master/.github/ExtraCoreLogo.jpg)</br>
+![ExtraCorePE](https://github.com/ExtraCorePE/ExtraCorePE/blob/master/.github/ExtraCorePE.jpg)</br>
 
 ## ExtraCorePE
 [![Travis-CI](https://travis-ci.org/ExtraCorePE/ExtraCorePE.svg?branch=master)](https://travis-ci.org/ExtraCorePE/ExtraCorePE)
