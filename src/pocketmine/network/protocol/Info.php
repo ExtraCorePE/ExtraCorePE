@@ -29,7 +29,8 @@ interface Info{
 	const ACCEPTED_PROTOCOLS = [113];
 	const MINECRAFT_VERSION = "v1.1.0";
 	const MINECRAFT_VERSION_NETWORK = "1.1.0"; //Detailed Version
-
+	
+	const BATCH_PACKET = 0xfe;
 	const LOGIN_PACKET = 0x01;
 	const PLAY_STATUS_PACKET = 0x02;
 	const SERVER_TO_CLIENT_HANDSHAKE_PACKET = 0x03;
