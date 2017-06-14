@@ -9,7 +9,7 @@ ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
 ExtraCorePE supports installer for Windows & MacOS & Linux <br>
 ExtraCorePE supports disable log setting (super light) <br>
-Contact us on [gitter](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) for support. <br>
+Contact us on [gitter](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) & [discord](https://discord.gg/SzEj9) for support. <br>
 
 ## Notice
 ExtraCorePE is supported to Minecraft: Pocket Edition & Windows 10 Edition<br>
