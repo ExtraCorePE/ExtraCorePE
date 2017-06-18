@@ -357,11 +357,4 @@ abstract class DataPacket extends BinaryStream{
 		$this->putByte((int) ($rotation / (360 / 256)));
 	}
 
-	/**
-	 * @return PacketName|string
-	 */
-	public function getName(){
-		return "DataPacket";
-	}
-
 }
