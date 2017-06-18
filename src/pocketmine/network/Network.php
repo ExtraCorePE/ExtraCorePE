@@ -52,6 +52,7 @@ use pocketmine\network\protocol\DataPacket;
 use pocketmine\network\protocol\DisconnectPacket;
 use pocketmine\network\protocol\DropItemPacket;
 use pocketmine\network\protocol\EntityEventPacket;
+use pocketmine\network\protocol\EntityFallPacket;
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\network\protocol\FullChunkDataPacket;
 use pocketmine\network\protocol\HurtArmorPacket;
@@ -69,7 +70,6 @@ use pocketmine\network\protocol\MoveEntityPacket;
 use pocketmine\network\protocol\MovePlayerPacket;
 use pocketmine\network\protocol\PlayStatusPacket;
 use pocketmine\network\protocol\PlayerActionPacket;
-use pocketmine\network\protocol\PlayerFallPacket;
 use pocketmine\network\protocol\PlayerInputPacket;
 use pocketmine\network\protocol\PlayerListPacket;
 use pocketmine\network\protocol\RemoveBlockPacket;
@@ -323,7 +323,6 @@ class Network {
 
 	private function registerPackets() {
 		$this->packetPool = new \SplFixedArray(256);
-
 		$this->registerPacket(ProtocolInfo::ADD_ENTITY_PACKET, AddEntityPacket::class);
 		$this->registerPacket(ProtocolInfo::ADD_HANGING_ENTITY_PACKET, AddHangingEntityPacket::class);
 		$this->registerPacket(ProtocolInfo::ADD_ITEM_ENTITY_PACKET, AddItemEntityPacket::class);
@@ -351,6 +350,7 @@ class Network {
 		$this->registerPacket(ProtocolInfo::DISCONNECT_PACKET, DisconnectPacket::class);
 		$this->registerPacket(ProtocolInfo::DROP_ITEM_PACKET, DropItemPacket::class);
 		$this->registerPacket(ProtocolInfo::ENTITY_EVENT_PACKET, EntityEventPacket::class);
+		$this->registerPacket(ProtocolInfo::ENTITY_FALL_PACKET, EntityFallPacket::class);
 		$this->registerPacket(ProtocolInfo::EXPLODE_PACKET, ExplodePacket::class);
 		$this->registerPacket(ProtocolInfo::FULL_CHUNK_DATA_PACKET, FullChunkDataPacket::class);
 		$this->registerPacket(ProtocolInfo::HURT_ARMOR_PACKET, HurtArmorPacket::class);
@@ -365,7 +365,6 @@ class Network {
 		$this->registerPacket(ProtocolInfo::MOVE_ENTITY_PACKET, MoveEntityPacket::class);
 		$this->registerPacket(ProtocolInfo::MOVE_PLAYER_PACKET, MovePlayerPacket::class);
 		$this->registerPacket(ProtocolInfo::PLAYER_ACTION_PACKET, PlayerActionPacket::class);
-		$this->registerPacket(ProtocolInfo::PLAYER_FALL_PACKET, PlayerFallPacket::class);
 		$this->registerPacket(ProtocolInfo::PLAYER_INPUT_PACKET, PlayerInputPacket::class);
 		$this->registerPacket(ProtocolInfo::PLAYER_LIST_PACKET, PlayerListPacket::class);
 		$this->registerPacket(ProtocolInfo::PLAY_STATUS_PACKET, PlayStatusPacket::class);
