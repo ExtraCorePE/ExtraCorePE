@@ -32,7 +32,6 @@ class PlayerActionPacket extends DataPacket{
 	const ACTION_ABORT_BREAK = 1;
 	const ACTION_STOP_BREAK = 2;
 
-
 	const ACTION_RELEASE_ITEM = 5;
 	const ACTION_STOP_SLEEPING = 6;
 	const ACTION_SPAWN_SAME_DIMENSION = 7;
@@ -46,6 +45,8 @@ class PlayerActionPacket extends DataPacket{
 
 	const ACTION_START_GLIDE = 15;
 	const ACTION_STOP_GLIDE = 16;
+
+	const ACTION_CONTINUE_BREAK = 18;
 
 	public $eid;
 	public $action;

@@ -21,8 +21,6 @@
 
 namespace pocketmine\network\protocol;
 
-#include <rules/DataPacket.h>
-
 use pocketmine\entity\Entity;
 use pocketmine\item\Item;
 use pocketmine\utils\BinaryStream;
@@ -38,9 +36,33 @@ abstract class DataPacket extends BinaryStream{
 		return $this::NETWORK_ID;
 	}
 
+	public function getName() : string{
+		return (new \ReflectionClass($this))->getShortName();
+	}
+
+	public function canBeBatched() : bool{
+		return true;
+	}
+
+	public function canBeSentBeforeLogin() : bool{
+		return false;
+	}
+
 	abstract public function encode();
 
 	abstract public function decode();
+
+	/**
+	 * Performs handling for this packet. Usually you'll want an appropriately named method in the NetworkSession for this.
+	 *
+	 * This method returns a bool to indicate whether the packet was handled or not. If the packet was unhandled, a debug message will be logged with a hexdump of the packet.
+	 * Typically this method returns the return value of the handler in the supplied NetworkSession. See other packets for examples how to implement this.
+	 *
+	 * @param NetworkSession $session
+	 *
+	 * @return bool true if the packet was handled successfully, false if not.
+	 */
+	abstract public function handle(NetworkSession $session) : bool;
 
 	public function reset(){
 		$this->buffer = chr($this::NETWORK_ID);
@@ -68,7 +90,14 @@ abstract class DataPacket extends BinaryStream{
 
 		return $data;
 	}
-	
+
+	/**
+	 * Decodes entity metadata from the stream.
+	 *
+	 * @param bool $types Whether to include metadata types along with values in the returned array
+	 *
+	 * @return array
+	 */
 	public function getEntityMetadata(bool $types = true) : array{
 		$count = $this->getUnsignedVarInt();
 		$data = [];
@@ -81,7 +110,7 @@ abstract class DataPacket extends BinaryStream{
 					$value = $this->getByte();
 					break;
 				case Entity::DATA_TYPE_SHORT:
-					$value = $this->getLShort(true); //signed
+					$value = $this->getSignedLShort();
 					break;
 				case Entity::DATA_TYPE_INT:
 					$value = $this->getVarInt();
@@ -101,30 +130,34 @@ abstract class DataPacket extends BinaryStream{
 					$value[2] = $item->getDamage();
 					break;
 				case Entity::DATA_TYPE_POS:
-					$value = [];
-					$value[0] = $this->getVarInt(); //x
-					$value[1] = $this->getVarInt(); //y (SIGNED)
-					$value[2] = $this->getVarInt(); //z
+					$value = [0, 0, 0];
+					$this->getSignedBlockPosition(...$value);
 					break;
 				case Entity::DATA_TYPE_LONG:
-					$value = $this->getVarInt(); //TODO: varint64 proper support
+					$value = $this->getVarLong();
 					break;
 				case Entity::DATA_TYPE_VECTOR3F:
 					$value = [0.0, 0.0, 0.0];
-					$this->getVector3f($value[0], $value[1], $value[2]);
+					$this->getVector3f(...$value);
 					break;
 				default:
 					$value = [];
 			}
 			if($types === true){
-				$data[$key] = [$value, $type];
+				$data[$key] = [$type, $value];
 			}else{
 				$data[$key] = $value;
 			}
 		}
+
 		return $data;
 	}
-	
+
+	/**
+	 * Writes entity metadata to the packet buffer.
+	 *
+	 * @param array $metadata
+	 */
 	public function putEntityMetadata(array $metadata){
 		$this->putUnsignedVarInt(count($metadata));
 		foreach($metadata as $key => $d){
@@ -152,18 +185,176 @@ abstract class DataPacket extends BinaryStream{
 					break;
 				case Entity::DATA_TYPE_POS:
 					//TODO: change this implementation (use objects)
-					$this->putVarInt($d[1][0]); //x
-					$this->putVarInt($d[1][1]); //y (SIGNED)
-					$this->putVarInt($d[1][2]); //z
+					$this->putSignedBlockPosition(...$d[1]);
 					break;
 				case Entity::DATA_TYPE_LONG:
-					$this->putVarInt($d[1]); //TODO: varint64 support
+					$this->putVarLong($d[1]);
 					break;
 				case Entity::DATA_TYPE_VECTOR3F:
 					//TODO: change this implementation (use objects)
-					$this->putVector3f($d[1][0], $d[1][1], $d[1][2]); //x, y, z
+					$this->putVector3f(...$d[1]); //x, y, z
 			}
 		}
+	}
+
+	/**
+	 * Reads a list of Attributes from the stream.
+	 * @return Attribute[]
+	 *
+	 * @throws \UnexpectedValueException if reading an attribute with an unrecognized name
+	 */
+	public function getAttributeList() : array{
+		$list = [];
+		$count = $this->getUnsignedVarInt();
+
+		for($i = 0; $i < $count; ++$i){
+			$min = $this->getLFloat();
+			$max = $this->getLFloat();
+			$current = $this->getLFloat();
+			$default = $this->getLFloat();
+			$name = $this->getString();
+
+			$attr = Attribute::getAttributeByName($name);
+			if($attr !== null){
+				$attr->setMinValue($min);
+				$attr->setMaxValue($max);
+				$attr->setValue($current);
+				$attr->setDefaultValue($default);
+
+				$list[] = $attr;
+			}else{
+				throw new \UnexpectedValueException("Unknown attribute type \"$name\"");
+			}
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Writes a list of Attributes to the packet buffer using the standard format.
+	 * @param Attribute[] ...$attributes
+	 */
+	public function putAttributeList(Attribute ...$attributes){
+		$this->putUnsignedVarInt(count($attributes));
+		foreach($attributes as $attribute){
+			$this->putLFloat($attribute->getMinValue());
+			$this->putLFloat($attribute->getMaxValue());
+			$this->putLFloat($attribute->getValue());
+			$this->putLFloat($attribute->getDefaultValue());
+			$this->putString($attribute->getName());
+		}
+	}
+
+	/**
+	 * Reads and returns an EntityUniqueID
+	 * @return int|string
+	 */
+	public function getEntityUniqueId(){
+		return $this->getVarLong();
+	}
+
+	/**
+	 * Writes an EntityUniqueID
+	 * @param int|string $eid
+	 */
+	public function putEntityUniqueId($eid){
+		$this->putVarLong($eid);
+	}
+
+	/**
+	 * Reads and returns an EntityRuntimeID
+	 * @return int|string
+	 */
+	public function getEntityRuntimeId(){
+		return $this->getUnsignedVarLong();
+	}
+
+	/**
+	 * Writes an EntityUniqueID
+	 * @param int|string $eid
+	 */
+	public function putEntityRuntimeId($eid){
+		$this->putUnsignedVarLong($eid);
+	}
+
+	/**
+	 * Reads an block position with unsigned Y coordinate.
+	 * @param int $x
+	 * @param int $y 0-255
+	 * @param int $z
+	 */
+	public function getBlockPosition(&$x, &$y, &$z){
+		$x = $this->getVarInt();
+		$y = $this->getUnsignedVarInt();
+		$z = $this->getVarInt();
+	}
+
+	/**
+	 * Writes a block position with unsigned Y coordinate.
+	 * @param int &$x
+	 * @param int &$y
+	 * @param int &$z
+	 */
+	public function putBlockPosition($x, $y, $z){
+		$this->putVarInt($x);
+		$this->putUnsignedVarInt($y);
+		$this->putVarInt($z);
+	}
+
+	/**
+	 * Reads a block position with a signed Y coordinate.
+	 * @param int &$x
+	 * @param int &$y
+	 * @param int &$z
+	 */
+	public function getSignedBlockPosition(&$x, &$y, &$z){
+		$x = $this->getVarInt();
+		$y = $this->getVarInt();
+		$z = $this->getVarInt();
+	}
+
+	/**
+	 * Writes a block position with a signed Y coordinate.
+	 * @param int $x
+	 * @param int $y
+	 * @param int $z
+	 */
+	public function putSignedBlockPosition($x, $y, $z){
+		$this->putVarInt($x);
+		$this->putVarInt($y);
+		$this->putVarInt($z);
+	}
+
+	/**
+	 * Reads a floating-point vector3 rounded to 4dp.
+	 * @param float $x
+	 * @param float $y
+	 * @param float $z
+	 */
+	public function getVector3f(&$x, &$y, &$z){
+		$x = $this->getRoundedLFloat(4);
+		$y = $this->getRoundedLFloat(4);
+		$z = $this->getRoundedLFloat(4);
+	}
+
+	/**
+	 * Writes a floating-point vector3
+	 * @param float $x
+	 * @param float $y
+	 * @param float $z
+	 */
+	public function putVector3f($x, $y, $z){
+		$this->putLFloat($x);
+		$this->putLFloat($y);
+		$this->putLFloat($z);
+	}
+
+	public function getByteRotation() : float{
+		return (float) ($this->getByte() * (360 / 256));
+	}
+
+	public function putByteRotation(float $rotation){
+		$this->putByte((int) ($rotation / (360 / 256)));
 	}
 
 	/**
