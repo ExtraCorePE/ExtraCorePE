@@ -5,6 +5,7 @@
 [![Gitter](https://badges.gitter.im/ExtraCorePE/ExtraCorePE.svg)](https://gitter.im/ExtraCorePE/ExtraCorePE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Introduction
+**NOTE:Sry, ExtraCorePE does not support 1.1.0 yet. Please wait for a while until correspondence.**
 ExtraCorePE is the advanced server software! <br>
 ExtraCorePE supports packet and event debug system (for plugin developers) <br>
 ExtraCorePE supports installer for Windows & MacOS & Linux <br>
