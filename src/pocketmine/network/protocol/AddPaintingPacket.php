@@ -51,7 +51,7 @@ class AddPaintingPacket extends DataPacket{
 	/**
 	 * @return string
 	 */
-	public function getName(){
+	public function getName() : string{
 		return "AddPaintingPacket";
 	}
 

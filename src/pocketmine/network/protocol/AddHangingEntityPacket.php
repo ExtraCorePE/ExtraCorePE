@@ -49,7 +49,7 @@ class AddHangingEntityPacket extends DataPacket{
 	/**
 	 * @return AddHangingEntityPacket|string
 	 */
-	public function getName(){
+	public function getName() : string{
 		return "AddHangingEntityPacket";
 	}
 

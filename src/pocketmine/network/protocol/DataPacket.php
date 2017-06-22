@@ -62,7 +62,7 @@ abstract class DataPacket extends BinaryStream{
 	 *
 	 * @return bool true if the packet was handled successfully, false if not.
 	 */
-	abstract public function handle(NetworkSession $session) : bool;
+	//abstract public function handle(NetworkSession $session) : bool;
 
 	public function reset(){
 		$this->buffer = chr($this::NETWORK_ID);
