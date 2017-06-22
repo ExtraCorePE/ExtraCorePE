@@ -67,7 +67,7 @@ interface Info{
 	const BLOCK_PICK_REQUEST_PACKET = 0x22;
 	const USE_ITEM_PACKET = 0x23;
 	const PLAYER_ACTION_PACKET = 0x24;
-	const PLAYER_FALL_PACKET = 0x25; //Todo Player -> Entity
+	const ENTITY_FALL_PACKET = 0x25;
 	const HURT_ARMOR_PACKET = 0x26;
 	const SET_ENTITY_DATA_PACKET = 0x27;
 	const SET_ENTITY_MOTION_PACKET = 0x28;
